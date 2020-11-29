@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+<!--3 函数简介
+    养成函数思维
+-->
+
+</body>
+<script>
+    //关键字function 定义函数名 形参 函数体
+    function bark(name, weight) {
+        if (weight > 20) {
+            console.log(name + "says WOOF WOOF");
+        } else {
+            console.log(name + "says woof woof");
+        }
+    }
+
+    //调用函数(名)bark并将小狗名字(参数实参)传递给它
+    bark("rover", 23);
+    bark("spot", 13);
+    bark("spike", 53);
+    bark("lady", 17);
+
+    /*
+    * 函数(function)可编写适用于各种不同环境的代码，可反复重用(reuse)代码块且管理起来容易的多，还可以将通用代码抽取出来，给它一个简单的名称，是JavaScript编程风格的核心。可将函数放在JavaScript文件的任何地方
+    * JavaScript函数能够给一系列代码指定名称，以便需要时反复使用他们。
+    *
+    * 函数定义：以关键字function打头，接下来指定函数名，圆括号()，形参(在圆括号内可定义一个或多个，如果有的话)，函数体(函数内的所有代码都属于函数体，在调用函数时执行)。
+    * 函数(名)命名：规则与变量命名规则相同，与变量一样使用有意义的函数名，并指出函数的作用。(没有调用，函数无法执行)
+    * 调用函数：函数名，实参。调用函数时使用实参进行调用(向它传递实参)，实参的值被赋给相应的形参(这些实参对应于函数定义中的形参)。
+    * 在函数内部使用形参时使用的都是传入的值(实参)，可通过实参传递任何JavaScript值，变量作实参(很常见)，表达式用作实参(先计算它的值，再将值传递给函数),调用后执行函数体中的语句完成所有工作。
+    *
+    *
+    * 形参：函数体中每个形参实际上就是一个新变量(它无需在形参面前定义var关键字这种变量的实例化工作是由函数完成的)，调用函数时，传入的每个值都将赋给相应的形参，形参只需定义一次。
+    * 实参：传递给函数的值，是调用函数的参数。形参会多次调用函数且每次提供的实参可能不同，按值传递，函数中处理形参时，其影响范围将限制在函数中。查看函数的形参以确认函数要求传入哪些形参
+    * 如果传入的实参不够情况是将没有相应实参的形参设置成未定义(undefined)，如果传入的实参太多JavaScript将忽略多余的实参，很多函数都没有形参,实参传入的顺序很重要否则导致代码不正确或运行错误，
+    *
+    * javaScript按值传递 实参创建副本，把每个实参的值复制给形参，实参的副本改变形参的值，在函数中修改形参的值时，只会影响形参，不影响传递给函数的变量
+    * 函数可返回值 包含return语句(但并非必须如此) return语句包含一个将作为函数调用结果返回的值或表达式。如果函数没有return语句返回undefined
+    *
+    * 也可在函数内声明变量初始化变量，如果变量在函数外声明的，就可以在代码的任何地方使用它，变量在一个函数中声明，就只能在这个函数中使用它，这被称为变量的作用域(scope)，
+    * 作用域分两种：全局(global)和局部(local) 变量的声明位置决定了其作用域，即变量在代码的哪些地方是可见和不可见
+    * 全局变量的寿命与网页一样长。JavaScript加载到网页之后降生，网页消失后死去。重新加载网页时，将销毁并重新创建所有的全局变量 使用未声明(忘记使用var关键字声明直接赋值)的变量，它就会是全局变量。在函数外可用可能带来麻烦(如果使用同名的全局变量，可能会修改并非你要修改的值)
+    * 局部变量通常(高级技巧可延长局部变量寿命)在函数结束时消失。在函数被调用后创建，一直活到函数返回(无论函数是否返回值)在局部变量的大限到来前，可从函数返回它们的值(返回(return)值可以用来判断函数被调用后的下一步运行处理结果或提供给别的方法使用)
+    * 如果局部变量与全局变量同名，它将遮住(shadow)全局变量，每次函数中引用的都是局部变量，而不是全局变量(全局变量被局部变量挡住了)全局变量和局部变量不会互相影响，如果修改其中的一个，对另一个不会有影响，它们是彼此独立的变量。
+    * 变量可在函数中首次需要时声明它，然在函数开头声明变量是一种良好的编程实践，看一眼就知道函数使用了哪些变量，
+    *
+    * 在合适的情况下适度使用(少用或不用)全局变量，尽可能使用局部变量，编写的代码很复杂或需要长期维护，就必须小心地管理变量，如果大量创建全局变量将难以跟踪都在什么地方使用了这些代码(以及在什么地方修改了它们的值)而这可能导致代码充满bug
+    * 形参与全局变量同名会遮住全局变量(局部变量会遮住全局变量)函数中不用该全局变量，遮住没关系，使用注释说明，以免以后阅读代码时感到迷惑
+    * 浏览器分两遍读取网页：第一遍读取所有的函数定义，第二遍开始执行代码，
+    *
+    * 代码指南：在开头声明全局变量(尽可能放在一起)，接着定义含函数(喜欢扎推)，函数(体)开头声明局部变量
+    *
+    * */
+</script>
+
+<script>
+    function whatShallIWear(temp) {
+        if (temp < 60) {
+            console.log("Wear a Jacket");
+        } else if (temp < 70) {
+            console.log("Wear a sweater");
+        } else {
+            console.log("Wear t-shirt");
+        }
+    }
+
+    whatShallIWear(50);
+    whatShallIWear(80);
+    whatShallIWear(60);
+
+    //实参传递任何javaScript值
+    saveMyProfile("krissy", 1991, 3.81, false);
+
+    function saveMyProfile(name, birthday, GPA, newuser) {
+        if (birthday >= 2004) {
+            // 处理孩子的代码
+        }
+        // 这个函数的其他代码
+    }
+
+    var student = "krissy";
+    var year = 1991;
+    var GPA = 381 / 100;
+    var status = "existinguser";
+    var isNewUser = (status == "newuser");
+    //变量用作实参传递
+    saveMyProfile(student, year, GPA, isNewUser);
+
+    var student = "krissy";
+    var status = "existinguser";
+    var year = 1991;
+    //表达式用作实参传递 (数字表达式，布尔表达式)
+    saveMyProfile(student, year, GPA, 381 / 100, status == "newuser");
+
+    //变量复制实参将值传递给形参
+
+    function doIt(param) {
+        //函数体内用形参接收到的实参的副本
+        param = 2;//重新给形参赋值
+    }
+
+    var test = 1;
+    doIt(test);
+    console.log(test);
+    var age = 7;
+
+    function addOne(x) {
+        x = x + 1;
+        //没有return语句的函数返回undefined
+    }
+
+    addOne(age);
+
+    //传入的实参不够 没有相应的实参的形参设置为未定义(undefined)
+    function makeTea(cups, tea) {
+        console.log("Brewing " + cups + "cups of" + tea);
+    }
+
+    makeTea(3);
+    //传递的参数太多 JavaScript将忽略多余的实参
+    makeTea(3, "Earl Grey", "hey ma!", 42);
+    //没有形参
+    makeTea();
+
+    function bake(degrees) {
+        var message;
+        if (degrees > 500) {
+            message = "I'm not a nuclear reactor!";
+
+        } else if (degrees < 100) {
+            message = "I'm not a refrigerator!";
+        } else {
+            message = "That's a very comfortable temperature for me.";
+            //setMode("bake");
+            //setTemp(degrees);
+            console.log("degrees:", degrees);
+        }
+        return message;
+    }
+
+    var status = bake(350);
+
+
+    function calculateArea(r) {
+        //形参也是局部变量
+        //函数需要的变量(局部)在函数体内声明
+        var area;
+        if (r <= 0) {
+            return 0;
+        } else {
+            //PI就是圆周率π3.14159(弧度制的π180°)是一个浮小数
+            area = Math.PI * r * r;
+            return area;
+        }
+    }
+
+    var radius = 5.2;//1先定义变量(全局)
+    var theArea = calculateArea(radius);//2再使用变量
+    console.log("The area is: " + theArea);
+
+    //实参和形参同名 修改形参的值不会导致实参值变化
+    function X(x) {
+        console.log(x);
+        x = x + 3;
+        console.log(x);
+        //未声明变量F自动被视为全局变量
+        F = 0;
+    }
+
+    var x = 0;
+    X(x);
+    //可在函数外使用变量全局变量F，函数执行完毕后，这个变量并不会消失
+    console.log(F);
+
+
+    var beanCounter = 10;//全局变量beanCounter
+
+    function getNumberOfItems(ordertype) {
+        var beanCounter = 0;//局部变量beanCounter 每次函数中引用的都是局部变量
+        if (ordertype == "order") {
+            //对bean Counter做些什么
+        }
+        return beanCounter;
+    }
+
+
+    function clunk(times) {
+        var num = times;
+        while (num > 0) {
+            display("clunk");
+            num = num - 1;
+        }
+    }
+
+    function thiingamajig(size) {
+        var facky = 1;
+        clunkCounter = 0;
+        if (size == 0) {
+            display("clank");
+        } else if (size == 1) {
+            display("thunk");
+        } else {
+            while (size > 1) {
+                facky = facky * size;
+                size = size - 1;
+            }
+            clunk(facky);
+        }
+    }
+
+    function display(output) {
+        console.log(output);
+        clunkCounter = clunkCounter + 1;
+    }
+
+    var clunkCounter = 0;
+    thiingamajig(5);
+    console.log(clunkCounter);
+
+
+    var balance = 10500;
+    var cameraOn = true;
+
+    function steal(balance, amount) {
+        cameraOn = false;
+        if (amount < balance) {
+            balance = balance - amount;
+        }
+        return amount;
+        cameraOn = true;
+    }
+
+    var amount = steal(balance, 1250);
+    alert("Criminal: you stole " + amount + "!");
+</script>
+
+</html>
