@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Object-o-matic</title>
+</head>
+<body>
+<!--5 理解对象
+    对象镇之旅
+-->
+</body>
+<script>
+    /*对象是一些列属性 包括花括号属性名冒号值逗号 例：{a:1,b:2}
+    *
+    *
+    * 对象变量声明 花括号内定义对象的所有属性，属性的定义包括名称、冒号和值，属性之间用逗号分隔(最后一个属性值后面不添加逗号)，与其他变量声明一样，对象变量声明也以分号结束。在同一个对象中不能包含两个同名的属性 例：var xyj={"zz":1,"aa":2,"ll":3}
+    * 对象并不实际存储对象 变量存储指向对象的引用 引用(就像指针)是对象的存储地址
+    * 基本类型变量(数字字符串布尔值等)存储的是实际值，而引用变量(对象变量)存储的是引用；一种获取特定对象的途径
+    * 请使用句点前的引用来获取相应的对象，再访问句点后指定的属性。car.color;(访问变量car引用的对象的属性color)
+
+    * 一个对象可以没有属性(var lookMaNoProps={})，也可由你决定包含多少个属性。试图访问不存在的属性时，结果将为undefined
+    * 访问属性:1句点表示法依次指定对象名、句点和属性名 例：fiat.mileage 2方括号表示法 使用对象名以及用引号和方括号括起的属性名 例：chevy["color"] 可将任何表达式放在方括号内，只要其结果为表示属性名的字符串即可 例：chevy["co"+"lor"]
+    * 修改属性:指定要修改的属性，再将一个新值赋给它(有些地方这样做是犯法的) 例：fiat.mileage=10000
+    * 添加属性:指定新属性并给它赋值 例：fiat.needsWashing=true (如果指定的属性在对象中不存在，将添加该属性，否则将修改该属性的值)
+    * 删除属性:使用一个特殊的关键字delete，删除属性(删除属性本身和属性值)若成功删除了属性，delete表达式将返回true否则返回false 例:delete fido.mileage;
+    *
+    * 传递对象:调用函数并向它传递一个对象时，传递的是对象的引用
+    * 如果在函数中修改对象的属性，修改的将是原始对象的属性。函数结束时，在函数中对对象所做的修改都依然有效。
+    * 对象包含状态和行为。状态可能影响行为，而行为也可能影响状态。对象封装(隐藏)了其状态和行为的复杂性。
+    * 对象内的函数，我们称之为方法。方法是在对象中赋给了属性名的函数。(方法的属性名就是函数名,调用方法也是用句点表示法和属性名和调用其他函数一样)
+    * 使用方法来修改属性是另一种封装方式，他让对象决定如何完成工作，通常可改善代码的可维护性和可扩展性。在对象方法中，我们要引用属性必须告诉JavaScript它是哪个对象的属性
+    *
+    * this：当前所处的对象(方法中引用对象时使用this，方法外面引用对象使用变量名)。可将this视为一个变量，指向其方法被调用的对象。调用方法时将把方法被调用的对象赋给this
+    * if条件里面带！表示取反
+    * for in 迭代对象的属性 迭代器以随机方式遍历对象的所有属性。
+    * javascript对象：Date(操作日期和时间) Math(随机数等) RegExp(字符串中查找模式) JSON(与其他程序交换JavaScript对象)
+    * 浏览器对象：Document(使用代码写入到网页) Window(包含一些与浏览器相关的重要属性和方法) Console(log等)
+    *
+    * */
+</script>
+<script>
+    var chevy = {
+        make: "Chevy",
+        model: "Bel Air",
+        year: 1975,
+        color: "red",
+        passengers: 2,
+        convertible: false,
+        mileage: 1021
+    };
+    var cadi = {
+        year: 1955,
+        color: "brown",
+        passengers: 5,
+        convertible: false,
+        mileage: 12892
+    };
+
+    var fiat = {
+        make: "Fiat",
+        model: "500",
+        year: 1975,
+        color: "Medium Blue",
+        passengers: 2,
+        convertible: false,
+        mileage: 88000,
+        started: false,
+        fuel: 0,
+        start: function () {
+            if (this.fuel > 0) {
+                this.started = true;
+            } else {
+                alert("The car is on empty, fill up before starting!");
+            }
+        },
+        stop: function () {
+            this.started = false;
+        },
+        drive: function () {
+            if (this.started) {
+                if (this.fuel > 0) {
+                    alert(this.make + " " + this.model + " goes zoom zoom!");
+                    this.fuel = this.fuel - 1;
+                } else {
+                    alert("Uh oh, out of fuel.");
+                    this.stop();
+                }
+            } else {
+                alert("You need to start the engine first.");
+            }
+        },
+        addFuel: function (amount) {
+            this.fuel = this.fuel + amount;
+        }
+    };
+    //像使用变量一样使用对象的属性
+    if (fiat.year < 1965) {
+        classic = true;
+    }
+    for (var i = 0; i < fiat.passengers; i++) {
+        //addPersonToCar();
+    }
+
+    //调用函数drive，准确地说是方法drive，也使用句点表示法：用句点将对象名(fiat)和属性名(drive)连接起来，并在属性后面加上圆括号，就像调用其他函数一样。
+    fiat.start();
+    fiat.drive();
+    fiat.addFuel(2);
+    fiat.start();
+    fiat.drive();
+    fiat.drive();
+    fiat.drive();
+    fiat.stop();
+
+    //for in 函数接收一个对象作为参数。被调用时迭代传入对象的所有可枚举属性然后返回一个所有属性名和其对应值的字符串
+    var obj = {
+        a: 1,
+        b: 2,
+        c: 3
+    };
+    for (var prop in obj) {
+        console.log("obj." + prop + "=" + obj[prop]);//obj.a=1;obj.b=1;obj.c=3;
+
+        /*console.log("zz", prop);
+        console.log("aa", obj);
+        console.log("ll", obj[prop]);*/
+    }
+
+    var song = {
+        name: "Walk This Way",
+        artist: "Run-D.M.C.",
+        minutes: 4,
+        seconds: 3,
+        genre: "80s",
+        playing: false,
+
+        play: function () {
+            if (!this.playing) {
+                this.playing = true;
+                console.log("Playing " + this.name + " by " + this.artist);
+            }
+        },
+        pause: function () {
+            if (this.playing) {
+                this.playing = false;
+            }
+        },
+    };
+    song.play();
+    song.pause();
+
+    var eightBall = {
+        index: 0,
+        advice: ["yes", "no", "maybe", "not a chance"],
+        shake: function () {
+            this.index = this.index + 1;
+            if (this.index >= this.advice.length) {
+                this.index = 0;
+            }
+        },
+        look: function () {
+            return this.advice[this.index];
+        }
+    };
+    eightBall.shake();
+    console.log(eightBall.look());
+</script>
+<!--<script>
+    var cadi = {
+        make: "GM",
+        model: "Cadillac",
+        year: 1955,
+        color: "tan",
+        passengers: 5,
+        convertible: false,
+        mileage: 12892,
+        started: false,
+        //函数定义种没有指定函数名，属性名就是函数名
+        start: function () {
+            //this指向当前对象(fiat)
+            this.started = true
+        },
+        stop: function () {
+            this.started = false;
+        },
+        //函数中引用的变量通常被解析成局部变量、函数形参或全局变量
+        drive: function () {
+            if (this.started) {
+                alert(this.make + " " + this.model + "goes zoom zoom!");
+            } else {
+                alert("You need to start the engine first.");
+            }
+        }
+    };
+    cadi.start();
+    cadi.drive();
+    cadi.stop();
+
+    var chevy = {
+        make: "Chevy",
+        model: "Bel Air",
+        year: 1957,
+        color: "red",
+        passengers: 2,
+        convertible: false,
+        mileage: 1021,
+        started: false,
+        start: function () {
+            this.started = true;
+        },
+        stop: function () {
+            this.started = false;
+        },
+        drive: function () {
+            if (this.started) {
+                alert(this.make + " " + this.model + " goes zoom zoom!");
+            } else {
+                alert("You need to start the engine first.");
+            }
+        }
+    };
+
+    chevy.start();
+    chevy.drive();
+    chevy.stop();
+
+    var taxi = {
+        make: "Webville Motors",
+        model: "Taxi",
+        year: 1955,
+        color: "yellow",
+        passengers: 4,
+        convertible: false,
+        mileage: 281341,
+        started: false,
+        start: function () {
+            this.started = true;
+        },
+        stop: function () {
+            this.started = false
+        },
+        drive: function () {
+            if (this.started) {
+                alert(this.make + " " + this.model + " goes zoom zoom!");
+            } else {
+                alert("You need to start the engine first.")
+            }
+        }
+    };
+    taxi.start();
+    taxi.drive();
+    taxi.stop();
+
+    // for in以每次一个的方式遍历对象的属性，并依次将每个属性赋给变量prop
+    for (var prop in chevy) {
+        console.log(prop + ": " + chevy[prop]);
+    }
+
+
+</script>-->
+<script type="text/html">
+    var dog = {
+    name: "Fido",
+    weight: 20.2,
+    age: 4,
+    breed: "mixed",
+    activity: "fetch balls"
+    };
+    var bark;
+    if (dog.weight > 20) {
+    bark = "WOOF WOOF";
+    } else {
+    bark = "woof woof";
+    }
+    var speak = dog.name + " says " + bark + " when he wants to " + dog.activity;
+    console.log(speak);
+
+    var taxi = {
+    make: "Webville Motors",
+    model: "Taxi",
+    year: 1955,
+    color: "yellow",
+    passengers: 4,
+    convertible: false,
+    mileage: 281341
+    };
+
+    function prequal(car) {
+    if (car.mileage > 10000) {
+    return false;
+    } else if (car.year > 1960) {
+    return false;
+    }
+    return true;
+    }
+
+    var worthALook = prequal(taxi);
+    //形参变量car和taxi指向同一个对象
+    if (worthALook) {
+    console.log("You gotta check out this " + taxi.make + " " + taxi.model);
+    } else {
+    console.log("You should really pass on the " + taxi.make + " " + taxi.model);
+    }
+
+    var fido = {
+    name: "Fido",
+    weight: 48,
+    breed: "Mixed",
+    loves: "Walks"
+    };
+    //函数loseWeight的形参dog是fido存储的引用的副本，因此修改这个形参变量的属性时，将影响传入的引用指向对象
+    loseWeight(fido, 10);
+
+    //fido传递过来的形参是引用(而不是)对象的副本，因此fido和dog指向同一个对象
+    function loseWeight(dog, amount) {
+    console.log(amount);
+    dog.weight = dog.weight - amount;
+    }
+
+    alert(fido.name + " now weight " + fido.weight);
+
+
+    function getSecret(file, secretPassword) {
+    file.opened = file.opened + 1;
+    if (secretPassword == file.password) {
+    return file.contents;
+    } else {
+    return "Invalid password! No secret for you.";
+    }
+    }
+
+    function setSecret(file, secretPassword, secret) {
+    if (secretPassword == file.password) {
+    file.opened = 0;
+    file.contents = secret;
+    }
+    }
+
+    var superSecretFile = {
+    level: "classified",
+    opened: 0,
+    password: 2,
+    contents: "Dr.Evel's next meeting is in Detroit"
+    };
+    var secret = getSecret(superSecretFile, 2);
+    console.log(secret);
+
+    setSecret(superSecretFile, 2, "Dr. Evel's next meeting is in Philadelphia.");
+    secret = getSecret(superSecretFile, 2);
+    console.log(secret);
+</script>
+<script type="text/html">
+    function makeCar() {
+    var makes = ["Chevy", "GM", "Fiat", "Webville Motors", "Tucker"];
+    var models = ["Cadillac", "500", "Bel-Air", "Taxi", "Torpedo"];
+    var years = [1955, 1957, 1948, 1954, 1961];
+    var colors = ["red", "blue", "tan", "yellow", "white"];
+    var convertible = [true, false];
+
+    var rand1 = Math.floor(Math.random() * makes.length);
+    var rand2 = Math.floor(Math.random() * models.length);
+    var rand3 = Math.floor(Math.random() * years.length);
+    var rand4 = Math.floor(Math.random() * colors.length);
+    var rand5 = Math.floor(Math.random() * 5) + 1;
+    var rand6 = Math.floor(Math.random() * 2);
+
+    var car = {
+    make: makes[rand1],
+    model: models[rand2],
+    year: years[rand3],
+    color: colors[rand4],
+    passengers: rand5,
+    convertible: convertible[rand6],
+    mileage: 0
+    };
+    return car;
+    }
+
+    function displayCar(car) {
+    console.log("Your new car is a" + car.year + " " + car.make + " " + car.model);
+    }
+
+    var carToSell = makeCar();
+    displayCar(carToSell);
+
+</script>
+</html>
