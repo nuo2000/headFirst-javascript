@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>dom</title>
+</head>
+
+<body>
+<!--6 了解DOM
+    与网页交互
+-->
+<p id="code1">The eagle is in the</p>
+<p id="code2">The fox is in the</p>
+<p id="code3">snuck into the garden last night</p>
+<p id="code4">They said it would rain</p>
+<p id="code5">Does the red robin crow at</p>
+<p id="code6">Where can I find Mr.</p>
+<p id="code7">I told the boys to bring tea and</p>
+<p id="code8">Where's my dough? The cake won't</p>
+<p id="code9">My watch stopped at</p>
+<p id="code10">barking,can't fly without umbrella.</p>
+<p id="code11">The green canary flies at</p>
+<p id="code12">The oyster owns a fine</p>
+
+</body>
+<script>
+    /*全局对象
+    * 网页是一个动态的数据结构
+    * 元素对象表示你在HTML文件中输入的内容，浏览器加载并分析HTML文件为每个元素创建一个元素对象，并将它们加入到DOM中。与其他对象一样，元素对象也有属性(如innerHTML)和方法。可使用它们来读取和修改元素的内容
+    * document获取HTML网页的顶级元素<html>将其视为当前元素，并作为document的子节点加入DOM中，嵌套在当前元素的每个元素，都将其作为当前元素的子节点加入到DOM中
+    * 顶部总是document(内置对象，包含用来访问和修改DOM的属性和方法)表示了浏览器显示的整个网页，它包含完整的DOM(文档对象模型，是浏览器在加载网页时创建)，JavaScript中使用它来访问整个DOM
+    * 处理DOM时，确保代码在网页完全加载后再执行，否则，代码执行时，DOM很可能还未创建。2个解决方法：1将代码移到<body>元素末尾外，2通过代码创建一个函数，其中包含要在网页加载完毕后执行的代码，然后，将这个函数赋给对象window(内置对象,表示浏览器窗口)的属性onload，对象window将在网页加载完毕后调用你赋给onload的函数。
+    * 开始标签和结束标签(</>)中的内容叫元素 属性 属性名="属性值"
+    * 浏览器内部，使用元素对象来表示你在HTML中输入的内容 元素对象也有属性
+    *
+    * innerHTML是个重要的属性，可以提取或替换元素的内容，查看innerHTML的值将是包含在元素中的内容(元素的HTML标签除外)包含元素的文本内容和全部嵌套的HTML内容 修改元素时，所做的修改将立即在网页中反映出来。
+    *
+    * HTML中，id能够唯一地标识元素，JavaScript可用id获取元素
+    * 下面都是方法
+    * document.getElementById只能传入id 但指定的id不存在将返回null 试图获取元素时，务必检查返回的是否是null
+    * document.getElementsByClassName根据类名获取元素，调用这个方法时返回的是一个元素集合，其中包括属于指定类的所有元素
+    * document.getElementsByTagName它也能返回元素集合，他返回与指定标签名匹配的所有元素
+    * setAttribute 添加修改元素特性 方法接收两个实参：1要添加或修改的特性名称 2要设置的特性值
+    * getAttribute 获取元素特性值 方法接收一个实参 要获取特性值名称
+    * 可使用window对象的onload属性给加载事件指定事件处理程序(回调函数)网页加载完毕后，将立即调用window对象的onload属性指向的事件处理程序(可处理很多不同类型的事件)
+    *
+    *
+    * */
+</script>
+
+<script>
+    //window是函数 document是一个全局对象 getElementById是一个方法 方法名大小写必须正确无误否则代码不能正确运行
+    //使用getElementById从DOM获取元素时，得到的是一个元素对象，可使用它来读取修改替换元素的内容和特性
+    var access = document.getElementById("code9");
+    var code = access.innerHTML;
+    code = code + " midnight";
+    alert(code);
+
+</script>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>My blog</title>
+    <script>
+        function init() {
+            var planet = document.getElementById("greenplanet");
+            planet.innerHTML = "Red Alert: hit by phaser fire!";
+            //元素对象有一个setAttribute方法，调用它来设置(添加)HTML元素的特性，方法接收两个实参：1要添加或修改的特性的名称 2要设置的特性值
+            planet.setAttribute("class", "redtext");
+        }
+
+        //不要再函数名后面添加括号，因为这里不是调用函数，而只是将函数作为一个值赋给属性window.onload
+        window.onload = init;
+    </script>
+    <script>
+        function addSongs() {
+            var song1 = document.getElementById("song1");
+            var song2 = document.getElementById("song2");
+            var song3 = document.getElementById("song3");
+            song1.innerHTML = "Blue Suede Strings, by Elvis Pagely";
+            song2.innerHTML = "Great Objects on Fire,by Jerry JSON Lewis";
+            song3.innerHTML = "I Code the Line,by Johnny JavaScript";
+        }
+
+        window.onload = addSongs;
+    </script>
+</head>
+<style>
+    .redtext {
+        color: red;
+    }
+</style>
+<body>
+<h1>Green Planet</h1>
+<p id="greenplanet">All is well</p>
+<h1>Red Planet</h1>
+<p id="redplanet">Nothing to report</p>
+<h1>Blue Planet</h1>
+<p id="blueplanet">All systems A-OK</p>
+
+
+<h1>My awesome playlist</h1>
+<ul id="playlist">
+    <li id="song1"></li>
+    <li id="song2"></li>
+    <li id="song3"></li>
+</ul>
+<img src="" alt="raspberry" id="raspberry">
+<script>
+    //使用getElementById从DOM获取元素时，得到的是一个元素对象，可使用它来读取、修改或替换元素的内容和特性。
+    var planet = document.getElementById("greenplanet");
+    planet.innerHTML = "Red Alert: hit by phaser fire!";
+    console.log(planet.innerHTML);
+
+    var scoop = document.getElementById("raspberry");
+    //获取元素特性(为HTML提供附加信息)值
+    var altText = scoop.getAttribute("alt");
+    if (altText == null) {
+        console.log("Oh, I guess there isn't an alt attribute.");
+    } else {
+        console.log("I can't see the image in the console,");
+        console.log("but I'm told it looks like: " + altText);
+    }
+</script>
+</body>
+
+</html>
