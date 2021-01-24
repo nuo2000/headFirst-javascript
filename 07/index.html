@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>type</title>
+</head>
+<body>
+<!--7 类型、相等、转换等
+    系统地讨论类型
+-->
+<div id="weatherDiv"></div>
+</body>
+<script>
+    /*
+    * 基本类型：数字、字符串和布尔值等低级基本类型
+    * 对象(用于表示问题空间中事物的高级对象)：Document、Element、Math、(自己创建的对象)Car、Dog、Song
+    * 每种类型都归于两个阵营之一：要么是基本类型，要么是对象。类型的生活非常简单，而对象记录了状态(属性)，还拥有行为(方法)。
+    * 字符串对象：可创建作为基本类型的字符串，也可创建作为对象的字符串，大多数情况下你无需显式地这样做，JavaScript解释器会再需要时替你创建字符串对象。
+    *
+    * undefined(未定义)：对于任何还没有值(即还未初始化)的东西，都会将undefined赋给它，能判断是否给变量(属性或数组元素)赋值了。undefined的类型是undefined。代码块执行时，属性或变量可能没有值，就需要检查它是否是undefined，避免在计算中使用未定义的值。
+    * null：要是有对象，我就会是一个对象，如果它无法返回一个对象就用null表示无对象
+    * 在应该提供一个对象，但无法创建或找到时，将提供null；在变量未初始化、对象没有指定属性或数组没有指定元素时，将返回undefined
+    * NaN：使用NaN[通常被当成为非数字(Not a Number)]来表示(所有)无法表示的数值结果。是JavaScript中唯一一个与自己不相等的值。需要使用特殊函数isNaN:isNaN() 它在传入的值不是数字时返回true。 1有非数值参与计算(非加法+运算)结果就是NaN 2Nan每个非数字值是不同的，(NaN!=NaN)所以NaN的结果永远等于false
+    * object:{}和[]类型都是(里面的属性和元素也是)对象 boolean:true/false布尔类型 string:"字符串"字符串类型 number:1数字类型
+    * function:类型是根据函数return的值的类型 没return语句返回undefined
+    * typeof是一个内置的JavaScript运算符，可用于探测其操作数(要对其进行操作的东西)的类型
+    *
+    * ==相等运算符：进行比较时，运算符==会考虑其操作数(要比较的两个值)的类型。2种情况：1如果两个值的类型相同，就直接比较 2如果两个值得类型不同，则尝试将它们转换(临时性的，旨在方便比较)为相同的类型，再进行比较
+    * 转换是在何时以及如何进行的：分为4种情形
+    * 1比较数字和字符串：将把字符串转换为数字，再对两个数字进行比较，字符串不能转换为数字时，结果为NaN,最终结果为false
+    * 2比较布尔值和其他类型：把布尔值转换为数字，在进行比较。true被转换为1false为0
+    * 3比较null和undefined：这两个值的结果为true。它们表示的都是没有值(没有值的变量和没有值的对象)
+    * 4只有三种情形，根据这些规则可确定任何相等表达式的值。然后还存在一些边界情况和需要注意的地方。一个是对象的比较，另一个是有些转换让你猝不及防 例如：""将空字符串转换为数字的结果是0
+    * ===严格相等(等同)运算符：可使用==的地方都可使用===(涉及的规则只有一条)当且仅当两个值的类型和值都相同时，它们才是严格相等的。
+    * ===如何进行比较。：如果两个值的类型相同，就对其进行比较，否则，不管它们是什么，结果都为false---不进行转换,也不考虑各种复杂的规则。
+    * <=和>= 比较字符串和数字，满足一个条件即为true，除数字和字符串外的其他值，javascript将尝试根据前面的规则进行类型转换。
+    * !=不等于和!==严格不等于
+    * 比较两个字符串时，根据字母排列顺序来决定大小，字母排列越靠前越小，比较第一个字母如何相同，比较第二个字母。
+    * 拼接和加法(+)运算符：用于数字，运算符+表示加法运算，而用于字符串，表示拼接(concatenation) 如果你将数字和字符串相加(顺序互换也是如此)，JavaScript将把数字转换为字符串，再进行拼接。与==运算符的情况大致相反。
+    * 其他算数运算符：对于其它算数符，如乘法、除法和减法运算符，JavaScript将认为你要执行的是算数运算，而不是字符串运算
+    *
+    * 判断两个对象是否相等：两个操作数都是对象，可使用==或===都可以，因为这种情况下，它们的工作原理完全相同。
+    * 情况如下：检查两个对象变量是否相等时，比较的是指向对象的引用。仅当两个引用指向的是同一个对象时，它们才相等。
+    *
+    * 真值(truthy)假植(false或falsy)：有些值并非true或false但用于表达式中时，被视为true或false，它们的行为像。理解真值和假植的秘诀：知道哪些是假植后，就可将其他值就视为真值。假植有5个：undefined、null、0、空字符串("")、NaN。假植就是false
+    *
+    * 字符串：一般而言，将字符串视为对象就好，其中包含大量帮助操作其文本的方法。无需判断一个字符串是对象还是基本类型(除非以对象构造函数创建，否则字符串都是基本类型，可随时使用运算符typeof判断类型)JavaScript会负责处理所有的细节。可对字符串执行的操作非常多。
+    * 字符串方法：
+    * toLowerCase() 将字符串中所有大写字符转小写并返回结果 toUpperCase()将字符串中所有小写字符转大写并返回结果 trim()删除字符串首尾空格(空白字符) match()在字符串中查找与正则表达式匹配的子串 slice()删除字符串的一部分，并返回结果 concat()将字符串拼接起来
+    * charAt()将一个整数作为参数(从0到length()-1)并返回一个字符串，其中包含指定位置处的字符(字符都有对应的索引和数组一样)。如果指定的索引大于或等于字符串的长度，返回一个空字符串。
+    * indexOf()将一个字符串作为参数，并在字符串中该参数首次出现的位置返回该参数中第一个字符的索引。如果没有找到指定的字符串将返回索引-1。两个参数：1需检索的字符串值(必需) 2规定在字符串中开始检索的位置。可选的整数参数(0到length()-1)
+    * lastIndexOf()与indexOf类似，但查找最后一个子串。
+    * substring()将两个索引作为参数，提取并返回这两个索引之间的子串。省略掉第二个参数的情况下，substring将提取从指定索引到字符串末尾的子串。
+    * split()将一个用作分隔符的字符作为参数，并根据这个分隔符将字符串分成多个部分(返回一个包含的数组)。
+    *
+    *
+    *
+    * */
+</script>
+<script>
+    var x;
+    if (x == undefined) {
+        // x未定义！处理这种情况
+    }
+
+    var customer = {
+        name: "Jenny"
+    };
+
+    if (customer.phoneNumber == undefined) {
+        // 获取客户的电话号码
+        console.log(customer);
+    }
+
+
+    var subject = "Just a string";
+    var probe = typeof subject;
+    console.log(probe);
+    var test1 = "abcdef";
+    var test2 = 123;
+    var test3 = true;
+    var test4 = {};
+    var test5 = [];
+    var test6;
+    var test7 = {"abcdef": 123};
+    var test8 = ["abcdef", 123];
+
+    function test9() {
+        console.log("返回undefined")
+        //return "abcdef";
+    }
+
+    var test10 = null;
+    var test11 = 0 / 0;
+    console.log(typeof test1);
+    console.log(typeof test2);
+    console.log(typeof test3);
+    console.log(typeof test4);
+    console.log(typeof test5);
+    console.log(typeof test6);
+    console.log(typeof test7);
+    console.log(typeof test8);
+    console.log(typeof test9());
+    console.log(typeof test10);
+    console.log(typeof test11);
+    //要将一个对象赋给这个变量，但现在没有这样的对象
+    var killerObjectSomeday = null;
+
+    var header = document.getElementById("header");
+    //null表示对象不存在
+    if (header == null) {
+        // 如果没有header元素，肯定除了大问题
+        console.log("找不到对象");
+    }
+    var weather = document.getElementById("weatherDiv");
+    if (weather != null) {
+        // 为div元素weather创建内容
+        alert("密苏里州布莱恩市温度始终保持在19°C ，降雨概率为40%");
+    }
+
+    //NaN指的是无法表示的数字
+    //数学中没有明确的答案
+    var a = 0 / 0;
+    //结果肯定不是数字
+    var b = "food" * 1000;
+    //负数的平方根是虚数，在JavaScript中无法表示
+    var c = Math.sqrt(-9);
+
+    var myNum = "xx";
+    //函数isNaN，它在传入的值不是数字时返回true
+    if (isNaN(myNum)) {
+        myNum = 0;
+        console.log("myNum是一个无法表示的数字", myNum);
+        if (myNum == Infinity) {
+            alert("我是一个非常大的数字")
+        }
+    }
+</script>
+<script>
+    if (99 == "99") {
+        console.log("A number equals a string!");
+    } else {
+        console.log("No way a number equals a string");
+    }
+
+    var testMe = 99;
+    if (testMe == 99) {
+        //要执行的操作
+        console.log(typeof testMe);
+    }
+    var testMe = "99";
+    //一个字符串和一个数字进行比较 相等运算符将字符串转换为数字 再比较，如果它们相等整个表达式的结果就为true,否则为false
+    if (testMe == 99) {
+        //要执行的操作
+        console.log(typeof testMe);
+    }
+
+    //情形一 比较数字和字符串
+    /*
+    * 99 == "vanilla"
+    * 99 == NaN
+    * false
+    * */
+    //情形二 比较布尔值和其他类型
+    /*
+    * 1 == true
+    * 1 == 1
+    * true
+    *
+    * "1" == true
+    * "1" == 1
+    * 1 == 1
+    * true
+    * */
+    //情形三 比较null和undefined
+    /*
+    * undefined == null
+    * true
+    * */
+    //情形四 猝不及防
+    /*
+    * 1 == ""
+    * 1 == 0
+    * false
+    * */
+
+    //将数字和字符串相加时，执行的是拼接，而不是加法运算
+    var addi = 3 + "4";
+    console.log(addi);
+    var plusi = "4" + 3;
+    console.log(plusi);
+
+    //其他算数运算符：乘除减，先把字符串转换为数字，再执行算术运算
+    var multi = 3 * "4";
+    console.log(multi);
+    var divi = 80 / "10";
+    console.log(divi);
+    var mini = "10" - 5;
+    console.log(mini);
+
+    //使用括号来指定先执行的运算。
+    var order = (1 + 2) + "pizzas";//执行1+2=3 3转换为字符串+拼接"pizzas"
+    console.log(order);
+    var order = 1 + (2 + "pizzas");//执行2转化为字符串+拼接"pizzas" 1转换为字符串+拼接"2pizzas"
+    console.log(order);
+
+    //判断两个对象是否相等
+    var object = {
+        attribute: "value"
+    };
+    var var1 = object;
+    var var2 = object;
+    //对象包含什么不重要，只要两个引用指向的对象相同，它们就相等
+    if (var1 === var2) {
+        console.log("var1和var2都指向变量object指向的相同object对象");
+        // 哇，它们是同一个对象！
+    }
+
+    function findCarInLot(car) {
+        for (var i = 0; i < lot.length; i++) {
+            if (car === lot[i]) {
+                return i;
+            }
+        }
+    }
+
+    var chevy = {make: "Chevy", model: "Bel Air"};
+    var taxi = {make: "Webville Motors", model: "Taxi"};
+    var fiat1 = {make: "Fiat", model: "500"};
+    var fiat2 = {make: "Fiat", model: "500"};
+    var lot = [chevy, taxi, fiat1, fiat2];
+    var loc1 = findCarInLot(fiat2);
+    var loc2 = findCarInLot(taxi);
+    var loc3 = findCarInLot(chevy);
+    var loc4 = findCarInLot(fiat1);
+    console.log(loc1, loc2, loc3, loc4);
+
+</script>
+<script>
+    //直到哪些是值是假植后，就可将其他值视为真值(不包括false)
+    //假植测试
+    var testThis;
+    if (testThis) {
+        // 执行某种操作
+        console.log("不打印，它是undefined,不会等于true的");
+    }
+    var element = document.getElementById("elementThatDoesntExist");
+    if (element) {
+        // 执行某种操作
+        console.log("不打印，null也是false");
+    }
+    if (0) {
+        // 执行另一种操作
+        console.log("不打印，0等于false");
+    }
+    if ("") {
+        // 这些代码会被 执行吗？你猜猜。
+        console.log("不打印，“”是0结果是false");
+    }
+    if (NaN) {
+        // 在布尔测试中使用NaN的结果会是什么呢？
+        console.log("不打印，NaN应该用isNaN且结果是false");
+    }
+
+    //这些不是假植中的一个，结果必然是true
+    if ([]) {
+        // 将执行这些代码
+        console.log("我是object对象");
+    }
+    var element = document.getElementById("elementThatDoesExist");
+    if (element) {
+        // 将执行这些代码
+        console.log("是一个element对象，不是假植，必然为真值，对吗？");
+    } else {
+        console.log("不对哦，你没获取到存在的或无法创建元素id对象，是null呢");
+    }
+    if (1) {
+        // 将执行这些代码
+        console.log("只有数字0是假植，其他数字都是真值");
+    }
+    var string = "mercy me";
+    if (string) {
+        // 将执行这些代码
+        console.log("我不是空字符串，也有变量值");
+    }
+
+    function lieDetectorTest() {
+        var lies = 0;
+        var stolenDiamond = {};
+        if (stolenDiamond) {
+            console.log("You stole the diamond");
+            lies++;
+        }
+        var car = {
+            keysInPocket: null
+        };
+        if (car.keysInPocket) {
+            console.log("Uh oh, guess you stole the car!");
+            lies++;
+        }
+        if (car.emptyGasTank) {
+            console.log("You drove the car after you stole it!");
+            lies++;
+        }
+        var foundYouAtTheCrimeScene = [];
+        if (foundYouAtTheCrimeScene) {
+            console.log("A sure sign of guilt");
+            lies++;
+        }
+        if (foundYouAtTheCrimeScene[0]) {
+            console.log("Caught with a stolen item!");
+            lies++;
+        }
+        var yourName = " ";
+        if (yourName) {
+            console.log("Guess you lied about your name");
+            lies++;
+        }
+        return lies;
+    }
+
+    var numberOfLies = lieDetectorTest();
+    console.log("You told " + numberOfLies + " lies!");
+    if (numberOfLies >= 3) {
+        console.log("Guilty as charged");
+    }
+
+
+    var text = "YOU SHOULD NEVER SHOUT WHEN TYPING";
+    var presentableText = text.toLowerCase();//字符串转为小写
+    if (presentableText.length > 0) {
+        alert(presentableText);
+    }
+    var emot = "Xoxxoo";
+    var hugs = 0;
+    var kisses = 0;
+    emot = emot.trim();//去除字符串首尾空格
+    console.log(emot);
+    emot = emot.toUpperCase();//字符串转为大写
+    console.log(emot);
+    for (var i = 0; i < emot.length; i++) {
+        //charAt返回指定索引处的字符串值
+        if (emot.charAt(i) === "X") {
+            hugs++;
+        } else if (emot.charAt(i) == "O") {
+            kisses++;
+        }
+    }
+    console.log("hugs" + hugs, "kisses" + kisses);
+    //JavaScript解释器创建字符串对象
+    var name = "Jenny";
+    var phone = "867-5309";
+    var fact = "This is a prime number";
+    var songName = phone + "/" + name;
+    console.log(songName);
+    //indexOf返回字符串(中)的值 在字符串中首次出现的位置
+    var index = phone.indexOf("-");//JavaScript在幕后将phone暂时转换为字符串对象
+    //substring提取字符串中介于两个指定下标之间的字符
+    if (fact.substring(10, 15) === "prime") {//字符串fact被暂时转换为对象，以支持方法substring
+        alert(fact);
+    }
+    console.log(index);
+</script>
+<script>
+    var input = "jenny@wickedlysmart.com";
+    console.log(input.length);
+    for (var i = 0; i < input.length; i++) {
+        //利用索引来获取字符 索引从0开始 获取第一个元素 length()-1获取最后一个元素
+        if (input.charAt(i) === "@") {
+            console.log("There's an @ sign at index " + i);
+        }
+    }
+
+    var parase = "the cat in the hat";
+    //字符串作为参数 在字符串中字符串首次出现的位置返回指定字符串中第一个字符的索引  (如果有两个位置以首次为准)
+    var index = parase.indexOf("cat");
+    console.log("there's a the sitting at index " + index);
+
+    //第二个参数，它是索引，指定从什么位置开始查找
+    index = parase.indexOf("the", 5);
+    console.log("there's a the sitting at index " + index);
+
+    //如果没有找到指定的字符串，返回-1
+    index = parase.indexOf("dog");
+    console.log("there's a the sitting at index " + index);
+
+    //将两个索引作为参数，提取并返回两个索引之间的字串。
+    var data = "name|phone|address";
+    var val = data.substring(5, 10);//返回从索引5到索引10(不包括)的子串
+    console.log("Substring is " + val);
+    //省略第二个参数情况下，substring将提取从指定索引到字符串末尾的子串
+    var val = data.substring(5);
+    console.log("Substring is now " + val);
+
+    //将一个用作分隔符的字符作为参数，根据分隔符将字符串分成多个部分
+    var data = "name|phone|address";
+    var vals = data.split("|");//split根据分隔符将字符串分成多个部分，并返回一个包含这些部分的数组
+    console.log("Substring is " + vals);
+
+
+    var phoneNumber = "123-4567";
+
+    function validate(phoneNumber) {
+        if (phoneNumber.length > 8 || phoneNumber.length < 7) {
+            return false;
+        }
+        for (var i = 0; i < phoneNumber.length; i++) {
+            if (i === 3) {
+                if (phoneNumber.length === 8 && phoneNumber.charAt(i) !== '-') {
+                    return false;
+                }
+            } else if (phoneNumber.length === 7 && isNaN(phoneNumber.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    var c = validate(phoneNumber);
+    console.log(c, "zz");
+
+
+    function validate(phoneNumber) {
+        if (phoneNumber.length > 8 || phoneNumber.length < 7) {
+            return false;
+        }
+        var first = phoneNumber.substring(0, 3);
+        var second = phoneNumber.substring(phoneNumber.length - 4);
+        if (isNaN(first) || isNaN(second)) {
+            return false;
+        }
+        if (phoneNumber.length === 8) {
+            return (phoneNumber.charAt(3) !== "-");
+        }
+        return true;
+    }
+
+    var d = validate(phoneNumber);
+    console.log(d, "ii");
+
+    function validate(phoneNumber) {
+        return phoneNumber.match(/^\d{3}-?\d{4}$/);
+    }
+
+    var e = validate(phoneNumber);
+    console.log(e, "ll");
+
+    function y(phoneNumber) {
+        res = [];
+        for (var i = 0; i < phoneNumber.length; i++) {
+            res.push(i);
+            return res;//for声明不会循环，直接返回return值，return后函数停止运行
+        }
+        return res
+    }
+
+    var k = y(phoneNumber);
+    console.log(k, "for循环只执行一次就return了");
+
+    function Duck(sound) {
+        this.sound = sound;
+        this.quack=function () {console.log(this.sound);}
+    }
+
+    var toy = new Duck("quack quack");
+    toy.quack();
+    console.log(typeof toy);
+    console.log(toy instanceof Duck);
+</script>
+</html>
