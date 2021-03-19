@@ -7,10 +7,10 @@
     <script>
         /*如何将javascript代码加入网页
        * 1.使用script元素将javascript代码添加到网页的<head>元素中(如果将代码放head中，用户可能必须等一会才能看到网页)
-       * 2.使用script元素将javascript代码添加到网页的<body>元素中最后一句 这种方法要好些(浏览器加载网页时，先加载<head>元素内的所有内容，再加载<body>元素。如果代码放body，用户将在等待代码加载时看到页面内容。)
+       * 2.使用script元素将javascript代码添加到网页的<body>元素中(通常是最后)这种方法要好些(浏览器加载网页时，先加载<head>元素内的所有内容，再加载<body>元素。如果代码放body的HTML后面，用户将在等待代码加载时看到页面内容。)
        * 3.在<head>中链接放在独立文件中的代码 使用<script>标签的src特性来指定javascript文件的url
-       * 4.<body>元素中链接到外部文件 既有一个可用于任何网页且易于维护的JavaScript文件，又在网页末尾引用它，网页加载完毕后再加载。
-       *<script>元素使用src特性引用独立javascript文件url时script中不能包含任何javascript代码  .js为后缀 script结束标签必不可少
+       * 4.<body>元素中链接到外部文件 使用<script>标签的src特性来指定javascript文件的url 既有一个可用于任何网页且易于维护的JavaScript文件，又在网页末尾引用它，网页加载完毕后再加载。
+       * <script>元素使用src特性引用独立javascript文件url时script中不能包含任何javascript代码  .js为后缀 script结束标签必不可少
        *
        * */
 
