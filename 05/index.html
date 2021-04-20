@@ -19,11 +19,12 @@
     * 请使用句点前的引用来获取相应的对象，再访问句点后指定的属性。car.color;(访问变量car引用的对象的属性color)
 
     * 一个对象可以没有属性(var lookMaNoProps={})，也可由你决定包含多少个属性。试图访问不存在的属性时，结果将为undefined
-    * 访问属性:1句点表示法依次指定对象名、句点和属性名 例：fiat.mileage 2方括号表示法 使用对象名以及用引号和方括号括起的属性名 例：chevy["color"] 可将任何表达式放在方括号内，只要其结果为表示属性名的字符串即可 例：chevy["co"+"lor"]
+    * 访问属性:1句点表示法依次指定对象名、句点和属性名 例：fiat.mileage 2方括号表示法 使用对象名以及用引号和方括号括起的属性名(在有些情况下，方括号表示法更灵活些) 例：chevy["color"] 可将任何表达式放在方括号内，只要其结果为表示属性名的字符串即可 例：chevy["co"+"lor"]
     * 修改属性:指定要修改的属性，再将一个新值赋给它(有些地方这样做是犯法的) 例：fiat.mileage=10000
     * 添加属性:指定新属性并给它赋值 例：fiat.needsWashing=true (如果指定的属性在对象中不存在，将添加该属性，否则将修改该属性的值)
     * 删除属性:使用一个特殊的关键字delete，删除属性(删除属性本身和属性值)若成功删除了属性，delete表达式将返回true否则返回false 例:delete fido.mileage;
     *
+    * 初始化基本类型变量：var x =3; 初始化对象(引用)变量：var = {...}
     * 传递对象:调用函数并向它传递一个对象时，传递的是对象的引用
     * 如果在函数中修改对象的属性，修改的将是原始对象的属性。函数结束时，在函数中对对象所做的修改都依然有效。
     * 对象包含状态和行为。状态可能影响行为，而行为也可能影响状态。对象封装(隐藏)了其状态和行为的复杂性。
@@ -32,7 +33,7 @@
     *
     * this：当前所处的对象(方法中引用对象时使用this，方法外面引用对象使用变量名)。可将this视为一个变量，指向其方法被调用的对象。调用方法时将把方法被调用的对象赋给this
     * if条件里面带！表示取反
-    * for in 迭代对象的属性 迭代器以随机方式遍历对象的所有属性。
+    * for in 迭代对象的属性 迭代器以随机方式遍历对象的所有属性。例:for (var prop in chevy) {console.log(prop + ": " + chevy[prop])} for in 以每次一个的方式遍历对象的属性，并依次将每个属性赋给变量prop 可使用方括号表示法通过prop来访问当前属性
     * javascript对象：Date(操作日期和时间) Math(随机数等) RegExp(字符串中查找模式) JSON(与其他程序交换JavaScript对象)
     * 浏览器对象：Document(使用代码写入到网页) Window(包含一些与浏览器相关的重要属性和方法) Console(log等)
     *
@@ -300,6 +301,14 @@
     } else {
     console.log("You should really pass on the " + taxi.make + " " + taxi.model);
     }
+
+    var age =7;
+    addOne(age);
+    function addOne(x) {
+    x = x + 1;
+    console.log(x)
+    }
+    console.log(age);//x是age的副本，因此只有x的值被加1，而age的值不变。
 
     var fido = {
     name: "Fido",
