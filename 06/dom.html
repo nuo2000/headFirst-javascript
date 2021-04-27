@@ -11,7 +11,7 @@
             planet.setAttribute("class", "redtext");
         }
 
-        //不要再函数名后面添加括号，因为这里不是调用函数，而只是将函数作为一个值赋给属性window.onload
+        //不要在函数名后面添加括号，因为这里不是调用函数，而只是将函数作为一个值赋给属性window.onload
         window.onload = init;
     </script>
     <script>
@@ -32,6 +32,39 @@
         color: red;
     }
 </style>
+<script>
+    /*
+    * HTML是标记，而JavaScript是代码，它们通过网页的表示，即文档对象模型DOM（Document Object Model）实现交互。
+    * JavaScript代码可通过与DOM交互来访问元素及其内容，1在浏览器中加载网页时，浏览器不仅对HTML进行分析并将其渲染到显示器，还创建一系列表示标记的对象。这些对象存储在DOM中。JavaScript代码可通过与DOM交互来访问元素及其内容，还可使用DOM来创建或删除元素。3JavaScript代码修改DOM时，浏览器将动态地更新网页，让用户能够在网页中看到新内容。
+    * 制作DOM：1首先创建一个document节点，2接下来，提取HTML网页的顶级元素（这里是<html>元素）将其视为当前元素，并作为document的子节点加入到DOM中，3对于嵌套在当前元素的每个元素，都将其作为当前元素的子节点加入到DOM中.4对于刚添加的每个元素，都重复第3步，直到所有元素都加入到了DOM中。
+    * 数据结构：一颗倒立的树，最上面是树根，最下面是树叶。
+    * 在浏览器内部，使用文档对象模型（DOM）来表示网页。
+    * DOM它是浏览器在加载网页时创建的 包含了网页的内容和元素。DOM顶部都是一个document对象，它下面是一棵树，其中包含由HTML标记中各个元素构成的树枝和树叶。(document)HTML树根 head、body有子节点的是树枝 只包含文本不包含其他元素是树叶
+    * 使用document对象来访问DOM。document对象包含你可用来访问和修改DOM的属性和方法。document表示浏览器显示的整个网页，它包含完整的DOM 在JavaScript代码中，document对象包含你可用来访问和修改DOM的属性和方法。
+    * 从DOM获取的是一个元素对象，可使用它来读取、修改或替换元素的内容和特性。修改元素时，所做的修改也将反映到网页中。
+    * DOM还有哪些功能 从DOM获取元素、创建元素并将其加入到DOM中、 从DOM删除元素 、遍历DOM中的元素
+    * 在浏览器内部，使用元素对象来表示你在HTML文件中输入的内容，如<p>some text</p>。加载并分析HTML文件时，浏览器为网页中的每个元素创建一个元素对象，并将它们加入到DOM中。因此，DOM其实就是一棵由元素对象组成的大树。元素对象也有属性和方法。
+    *
+    * 每个载入浏览器的 HTML 文档都会成为 Document 对象。由浏览器创建的对象 比如document(HTML DOM Document 对象) JavaScript提供的（如Math对象）还有些是你自己编写的
+    *
+    * getElementById时，务必检查它返回的是否是null
+    * innerHTML属性 可以读取或替换元素的内容。通过修改属性innerHTML来修改元素时，所做的修改将立即在网页中反映出来。
+    * outerHTML属性表示元素内部的HTML以及元素本身
+    *
+    * 处理DOM时，确保代码在网页完全加载后再执行至关重要；否则，代码执行时，DOM很可能还未创建。除了将代码移到<body>元素末尾外，还有一种办法，那就是通过代码。首先，创建一个函数，在其中包含要在网页加载完毕后执行的代码。然后，将这个函数赋给对象window的属性onload。
+    * window是一个JavaScript内置对象，表示浏览器窗口。所有的全局函数和对象都是属于window对象的属性和方法。
+    * 假设有重大的事件（如网页加载完毕）即将发生，而你必须在其发生后第一时间获悉。对于这种情形，一种常见的处理方式是使用回调函数［callback，也叫事件处理程序（event handler）］。
+    * 对象window将调用你赋给其属性onload的函数，但仅在网页加载完毕后才这样做。
+    * 回调函数(事件处理程序)的工作原理：给了解事件的对象提供一个函数；事件发生后，这个对象将通过调用这个函数来通知你。
+    *
+    * setAttribute属性 添加新特性或修改既有特性 方法接受两个实参：要添加或修改的特性的名称 要设置的特性值。 如果指定的特性不存在，将在元素中创建它。
+    * getAttribute属性 获取特性值 传入要获取其值的特性的名称。如果指定的特性不存在将返回null
+    *
+    * 网页加载完毕后，将立即调用window对象的onload属性指向的事件处理程序(回调函数)。可使用事件处理程序来处理很多不同类型的事件。
+    * 回调函数赋值给window.onload时，不要在函数名后面添加括号，因为这里不是调用函数，而只是将函数作为一个值赋给属性window.onload
+    *
+    * */
+</script>
 <body>
 <h1>Green Planet</h1>
 <p id="greenplanet">All is well</p>
@@ -51,7 +84,9 @@
 <script>
     //使用getElementById从DOM获取元素时，得到的是一个元素对象，可使用它来读取、修改或替换元素的内容和特性。
     var planet = document.getElementById("greenplanet");
+    //变量planet包含一个元素对象—— id为greenplanet的<p>元素。
     planet.innerHTML = "Red Alert: hit by phaser fire!";
+    //可使用元素对象的属性innerHTML来修改元素的内容。
     console.log(planet.innerHTML);
 
     var scoop = document.getElementById("raspberry");
