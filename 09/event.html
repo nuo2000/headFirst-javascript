@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>I'm alive!</title>
+    <style>
+        body {
+            margin: 20px;
+        }
+
+        img {
+            margin: 20px;
+        }
+    </style>
+    <script>
+
+        function resize() {
+            var element = document.getElementById("display");
+            element.innerHTML = element.innerHTML + " that tickles!";
+        }
+    </script>
+</head>
+<body>
+<!--9 异步编码
+    处理事件
+-->
+
+<img src="zeroblur.jpg" alt="" id="zero">
+<img src="oneblur.jpg" alt="" id="one">
+<img src="twoblur.jpg" alt="" id="two">
+<img src="threeblur.jpg" alt="" id="three">
+<img src="fourblur.jpg" alt="" id="four">
+<img src="fiveblur.jpg" alt="" id="five">
+
+
+<img id="map" src="map.jpg"/>
+<p id="coords">Move mouse to find coordinates</p>
+
+
+<p id="display">
+    Whatever you do, don't resize this window! I'm warning you!
+</p>
+<script>
+    window.onresize = resize;
+</script>
+</body>
+<script>
+    /*function pageLoadedHandler() {
+        alert("I'm alive!");
+    }
+
+    window.onload = pageLoadedHandler;*/
+
+    /*window.onload = init;
+
+    function init() {
+        var image = document.getElementById("zero");
+        // 这两个处理程序是在不同的时间调用的。1网页加载完毕后 2户单击图像时
+        image.onclick = showAnswer;
+    }
+
+    function showAnswer() {
+        var image = document.getElementById("zero");
+        image.src = "zero.jpg";
+    }*/
+
+
+    /*window.a = 3;
+
+    function test() {
+        console.log(this.a);
+    }
+
+    test.bind({a: 2})();
+    test();//this指向函数内部没找到a转向全部变量查找*/
+
+
+    window.onload = init;
+
+    function init() {
+        var images = document.getElementsByTagName("img");
+        for (var i = 0; i < images.length; i++) {
+            //images[i].onclick = showAnswer;
+            images[i].onmouseover = showAnswer;
+            images[i].onmouseout = reblur;
+            //用户单击图像时
+            //将触发单击事件
+            //一个event对象被创建
+            //该对象被传递给事件处理程序
+        }
+    }
+
+    function showAnswer(eventObj) {
+        //在事件处理程序中，你可使用这个事件对象来获取有关事件的信息，如事件类型、触发事件的元素等。
+        var image = eventObj.target;
+        var name = image.id;
+        name = name + ".jpg";
+        image.src = name;
+        /*setTimeout(reblur, 2000, image);*/
+    }
+
+    function reblur(eventObj) {
+        var image = eventObj.target;
+        var name = image.id;
+        name = name + "blur.jpg";
+        image.src = name;
+    }
+
+
+    var addOne = function (x) {
+        return x + 1;
+    };
+
+    var six = addOne(5);
+
+    window.onload = function () {
+        alert("The page is loaded!")
+
+    };
+    window.onload = init;
+
+    function init() {
+        var map = document.getElementById("map");
+        map.onmousemove = showCoords;
+    }
+
+    function showCoords(eventObj) {
+        var map = document.getElementById("coords");
+        var x = eventObj.clientX;
+        var y = eventObj.clientY;
+        map.innerHTML = "Map coordinates：" + x + "," + y;
+    }
+
+    function timeHandler() {
+        alert("Hey what are you just sitting there staring at a blank screen?");
+    }
+
+    setTimeout(timeHandler, 5000);//定时器等待5秒 然后调用处理程序
+    var tick = true;
+
+    function ticker() {
+        if (tick) {
+            console.log("Tick");
+            tick = false;
+            clearInterval();
+        } else {
+            console.log("Tock");
+            tick = true;
+        }
+    }
+
+    var t = setInterval(ticker, 1000);//每间隔1秒调用一次处理程序
+    clearInterval(t);//在要停止间隔定时器时调用clearInterval ，并将这个变量传递给它。
+</script>
+<script>
+    /*
+    * 大多数JavaScript代码都是事件响应式的。用户单击网页、通过网络收到数据、定时器到期、DOM发生变化等。
+    * 编写处理程序来处理事件。处理程序通常是一段代码，知道事件发生时该如何做。从代码的角度说，处理程序就是一个函数。事件发生时，其处理函数将被调用。(回调函数、监听器)
+    * 为让处理程序在事件发生时得以调用，你首先需要注册它。你将看到，注册的方式有多种，具体采用哪种取决于事件的类型。
+    * 代码的执行方式不完全是线性的，对用户输入作出响应。
+    * 以相应事件的方式组织代码是另一种代码编写方式。要以这种方式编写代码，需要考虑可能发生的事件以及代码应如何响应这些事件，在计算机科学中，通常说这种代码是异步(asynchronous)的,因为我们编写的代码仅在相应的事件发生时才会被调用。这种编码方式也改变了我们看待问题的角度，不在逐步的编写代码来实现算法，而是将众多的处理程序整合起来，构成一个应用程序。
+    * 算法不过是一种花哨的说法，其实指的就是一系列解决问题的步骤。
+    *
+    * 并非所以HTML特性都有对应的对象属性，因此对于这些特性，必须使用setAttribute和getAttribute来设置和获取，可使用元素对象相应的属性，也可使用getAttribute和setAttribute,而且这两种方法的效果相同。
+    * 函数调用多次 会依次输出多个值
+    *
+    * 方法document.getElementsByTagName的工作原理与document.getElementById很像,根据标签名来获取元素，可能返回一个(NodeList其中包含0个、1个或更多的element对象，类似于数组，可对其进行迭代)或多个元素也可能不返回任何元素
+    *
+    * 单击事件处理程序被调用时，将向它传递一个事件对象。事件对象包含一些有关事件的常规信息和具体信息，具体信息取决于事件的类型，常规信息包括事件的类型(click或load)和(目标)属性target，它存储了一个引用，指向触发事件的元素。如事件是那个元素触发的以及事件是何时发生的。事件对象主要用于DOM事件处理程序
+    * 可能在短时间内发生很多事件。发生的事件太多，浏览器无法实时地处理时，这些事件将按发生的顺序存储到事件队列中，让浏览器能够依次调用每个事件的处理程序。
+    * setTimeout() 接受三个参数：事件处理程序和时间间隔(单位为毫秒)和参数(触发时间事件时，这个参数将被传递给处理程序) setTimeout不向处理程序传递事件对象，因为时间事件并非由特定的元素触发
+    *
+    * click事件 在网页中单击(或轻按)时触发这个事件
+    * load 事件 浏览器加载网页完毕后触发的事件
+    * mousemove事件 在元素上移动鼠标时，将触发这个事件
+    * mouseover事件 用户将鼠标指向元素时，将触发这个事件
+    * mouseout事件 用户将鼠标从元素上移开时将触发这个事件
+    * touchstart事件 在触摸设备上，用户触摸并按住元素时，将触发这个事件
+    * touchend事件 用户停止触摸时，将触发这个事件
+    * keypress事件 用户按下任何键都将触发这个事件
+    * unload事件 用户关闭浏览器窗口或切换到其他网页时，将触发这个事件。
+    * resize事件 每当用户调整浏览器窗口的大小时，都将触发这个事件
+    * play事件 用户单击网页中<video>元素的播放按钮时，将触发这个事件。
+    * pause事件 用户单击<video>元素的暂停按钮时，将触发这个事件。
+    * dragstart事件 用户拖曳网页中的元素时，将触发这个事件。
+    * drop事件 用户放下拖曳的元素时，将触发这个事件。
+    *
+    * */
+</script>
+</html>
