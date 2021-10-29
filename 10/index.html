@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>function</title>
+</head>
+<body>
+<!--10 函数是一等公民
+       自由的函数
+-->
+
+<script>
+    //在语句(如赋值语句)中以这样的方式使用关键字function时，创建的是函数表达式。
+
+    var fly = function (num) {
+        for (var i = 0; i < num; i++) {
+            console.log("Flying!");
+        }
+    };
+    //函数没有名称，该表达式的结果是一个值，这个值被赋给变量fly(调用了它)它是一个 指向函数的引用
+    fly(3);
+
+
+    var midi = true;
+    var type = "piano";
+    var midiInterface;
+
+    function play(sequence) {
+        //函数体的代码
+    }
+
+    var pause = function () {
+        stop();
+    };
+
+    function stop() {
+        //函数体的代码
+    }
+
+    function createMidi() {
+        //函数体的代码
+    }
+
+    if (midi) {
+        midiInterface = function (type) {
+            //函数体的代码
+        }
+    }
+
+    //函数将其赋给变量
+    function quack(num) {
+        for (var i = 0; i < num; i++) {
+            console.log("Quack!");
+        }
+    }
+
+    var fly = function (num) {
+        for (var i = 0; i < num; i++) {
+            console.log("Flying!");
+        }
+    };
+
+    //将fly赋给变量superFly后，superFly存储了相应的函数引用，因此可在这个变量后面加上圆括号和实参来调用相应的函数
+    var superFly = fly;
+    superFly(2);
+    //引用就是引用，不管是以什么方式创建的(使用函数声明或函数表达式创建)
+    var superQuack = quack;
+    superQuack(3);
+</script>
+
+<script>
+    var winner = function () {
+        alert("WINNER!");
+    };
+    var loser = function () {
+        alert("LOSER!");
+    };
+
+    winner();
+
+    var a = winner;
+    var b = loser;
+    var c = loser;
+
+    a();
+    b();
+
+    c = a;
+    a = b;
+    b = c;
+    c = a;
+    a = c;
+    a = b;
+    b = c;
+    a();
+</script>
+
+<script>
+    var passengers = [
+        {name: "Jane Doloop", paid: true, ticket: "coach"},
+        {name: "Sue property", paid: false, ticket: "firstclass"},
+        {name: "Dr. Evel", paid: true, ticket: "firstclasss"},
+        {name: "John Funcall", paid: true, ticket: "premium"}
+    ];
+
+    function checkPaid(passengers) {
+
+        for (var i = 0; i < passengers.length; i++) {
+            if (!passengers[i].paid) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function checkNoFly(passengers) {
+        for (var i = 0; i < passengers.length; i++) {
+            if (onNoFlyList(passengers[i].name)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function printPassengers(passengers) {
+        for (var i = 0; i < word.length; i++) {
+            if (word[i]) {
+                return false
+            }
+        }
+        return true;
+    }
+
+
+    function sayIt(translator) {
+        var phrase = translator("Hello");
+        alert(phrase);
+    }
+
+    function hawaiianTranslator(word) {
+        if (word === "Hello") return "Aloha";
+        if (word === "Goodbye") return "aloha";
+    }
+
+    sayIt(hawaiianTranslator);
+
+    //函数作为参数
+    var allCanFly = processPassengers(passengers, checkNoFlyList);
+
+    function processPassengers(passenger, testFunction) {
+        for (var i = 0; i < passenger.length; i++) {
+            if (testFunction(passenger[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function checkNoFlyList(passenger) {
+        console.log(passenger.name === "Dr. Evel");
+        return (passenger.name === "Dr. Evel");
+    }
+
+    function checkNotPaid(passenger) {
+        return (!passenger.paid)
+    }
+
+    var allPaid = processPassengers(passengers, checkNotPaid);
+
+    if (!allPaid) {
+        console.log("The plane can't take off: not everyone has paid.");
+    }
+
+    function printPassenger(passenger) {
+        var message = passenger.name;
+        if (passenger.paid === true) {
+            message = message + " has paid";
+        } else {
+            message = message + " has not paid";
+        }
+        console.log(message);
+        return false;
+    }
+
+    processPassengers(passengers, printPassenger);
+
+    function fun(echo) {
+        console.log(echo);
+    }
+
+    fun("hello");
+
+    function boo(aFunction) {
+        aFunction("boo");
+    }
+
+    boo(fun);
+    console.log(fun);
+    fun(boo);
+    var moreFun = fun;
+    moreFun("hello again");
+
+    function echoMaker() {
+        return fun;
+    }
+
+    var bigFun = echoMaker();
+    bigFun("Is there an echo?");
+
+    function createDinnerOrder(passenger) {
+        var orderFunction;
+        if (passenger.ticket === "firstclass") {
+            orderFunction = function () {
+                alert("Would you like chicken or pasta?");
+            };
+        } else if (passenger.ticket === "premium") {
+            orderFunction = function () {
+                alert("Would you like a snack box or cheese plate?");
+            };
+        } else {
+            orderFunction = function () {
+                alert("Would you like peanuts or pretzels?")
+            };
+        }
+        return orderFunction;
+    }
+
+    function serveCustomer(passenger) {
+        var getDinnerOrderFunction = createDinnerOrder(passenger);
+        getDinnerOrderFunction();//调用存储函数中返回的函数
+    }
+
+    function servePassengers(passenger) {
+        for (var i = 0; i < passenger.length; i++) {
+            serveCustomer(passengers[i]);
+        }
+    }
+
+    servePassengers(passengers);
+</script>
+
+<script>
+    var products = [
+        {name: "Grapefruit", calories: 170, color: "red", sold: 8200},
+        {name: "Orange", calories: 160, color: "orange", sold: 12101},
+        {name: "Cola", calories: 210, color: "caramel", sold: 25412},
+        {name: "Diet Cola", calories: 0, color: "caramel", sold: 43922},
+        {name: "Lemon", calories: 200, color: "clear", sold: 14983},
+        {name: "Raspberry", calories: 180, color: "pink", sold: 9427},
+        {name: "Root Beer", calories: 200, color: "caramel", sold: 9909},
+        {name: "Water", calories: 0, color: "clear", sold: 62123}
+    ];
+
+    function compareSold(product1, product2) {
+        return product1 - product2;
+    }
+
+    products.sort(compareSold);
+
+
+    var numbersArray = [60, 50, 62, 58, 54, 54];
+
+    function compareNumbers(num1, num2) {
+        if (num1 < num2) {
+            return 1;
+        } else if (num1 === num2) {
+            return 0
+        } else {
+            return -1;
+        }
+    }
+
+    /*function compareNumbers(num1, num2) {
+        return num1 - num2;//简化if else-if else
+    }*/
+    //方法sort要求比较函数返回一个大于等于或小于0的数字
+    numbersArray.sort(compareNumbers);
+    console.log(numbersArray);
+
+
+    function compareSold(colaA, colaB) {
+        if (colaA.sold > colaB.sold) {
+            return 1;
+        } else if (colaA.sold === colaB.sold) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    function printProducts(products) {
+        for (var i = 0; i < products.length; i++) {
+            console.log("Name: " + products[i].name + ", Calories: " + products[i].calories + ", Color: " + products[i].color + ", Sold: " + products[i].sold);
+        }
+    }
+
+    products.sort(compareSold);
+    console.log("Products sorted by compareSold:");
+    printProducts(products);
+
+    function compareName(colaA, colaB) {
+        if (colaA.name < colaB.name) {
+            return -1;
+        } else if (colaA.name === colaB.name) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    products.sort(compareName);
+    console.log("Products sorted by compareName:");
+    printProducts(products);
+
+    function compareCalories(colaA, colaB) {
+        if (colaB.calories < colaA.calories) {
+            return 1;
+        } else if (colaB.calories === colaA.calories) {
+            return 0;
+        } else {
+            return -1
+        }
+    }
+
+    products.sort(compareCalories);
+    console.log("Products sorted by compareCalories");
+    printProducts(products);
+
+    function compareColor(colaA, colaB) {
+        if (colaA.color > colaB.color) {
+            return 1;
+        } else if (colaA.color === colaB.color) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    products.sort(compareColor);
+    console.log("Products sorted by compareColor");
+    printProducts(products);
+</script>
+</body>
+<script>
+    /*
+    * 顾名思义，函数引用是指向函数的引用。可使用函数引用来调用函数，还可将它们赋给变量、存储在对象中、传递给函数或从函数返回它们(就像对象引用一样)
+    * 定义函数的方式有两种：使用函数声明和使用函数表达式。
+    *
+    * 1使用函数声明时，函数将在执行代码前创建；而使用表达式时，函数将在运行阶段执行代码时创建。
+    * 2函数声明时将创建一个与函数同名的变量，并将它指向函数；而使用函数表达式时，通常不给函数指定名称，要么在代码中将函数赋给一个变量要么以其他方式使用函数表达式
+    *
+    * 函数声明在执行代码前处理。函数表达式在运行阶段随其他代码一起执行
+    * 在分析网页期间(执行任何代码之前)，浏览器查找函数声明。找到函数声明时，浏览器创建相应函数，并将得到的函数引用赋给与函数同名的变量。处理所有的函数声明后,浏览器回到代码开头，开始从头到尾的顺序执行代码。
+    *
+    * 函数声明为何不是函数表达式？函数声明是一条语句。可以认为它包含一条隐藏的赋值语句，这条语句将函数引用赋给一个变量。函数表达式不自动将函数引用赋给任何变量，你必须显式地这样做。
+    * 函数表达式和其他表达式不一样，可出现在很多不同的地方。
+    *
+    * 函数是一等值，函数引用是一个指向函数的值，请将函数视为值，就像数字、字符串、布尔值和对象一样。相比于其它值，函数值的不同之处在于我们可以调用它。
+    *
+    * 一等值：在编程语言中，可像对待其他任何值一样对待的值，包括赋给变量、作为实参传递给函数以及从函数中返回。
+    *
+    * sort javascript数组包含一个sort方法，将一个知道如何对两个数组元素进行比较的函数作为参数。排序代码可重用于任何数据集。但要对特定的数据集进行排序，排序代码必须知道如何对这些数据进行比较。
+    * 数字列表、名称列表和对象列表对它们进行排序时，比较方式取决于列表项的类型：对于数字，使用<、>和==进行比较；对于字符串，按字母顺序进行比较(在javascript中，也可以使用<、>和==进行比较)对于对象，我们采用自定义的方式根据对象的属性进行比较。
+    * 传递给sort的比较函数需要根据比较结果返回一个大于0、等于0或小于0的数字：如果第一项大于第二项，就返回一个大于0的值；如果第一项等于第二项，就返回0；如果第一项小于第二项，就返回一个小于0的值。
+    * sort 方法是破坏性的，因为它就地修改数组，而不是返回一个排序后的新数组。
+    *
+    * */
+</script>
+</html>
