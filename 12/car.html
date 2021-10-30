@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>car</title>
+</head>
+<body>
+<!--<script>
+    function Car(make, model, year, color, passengers, convertible, mileage) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.color = color;
+        this.passengers = passengers;
+        this.convertible = convertible;
+        this.mileage = mileage;
+        this.started = false;
+        this.start = function () {
+            this.started = true;
+        };
+        this.stop = function () {
+            this.started = false;
+        };
+        this.drive = function () {
+            if (this.started) {
+                alert(this.make + " Zoom zoom");
+            } else {
+                alert("You need to start the engine first.");
+            }
+        };
+    }
+
+    var chevy = new Car("Chevy", "Bel Air", 1957, "red", 2, false, 1021);
+    var cadi = new Car("GM", "Cadillac", 1955, "tan", 5, false, 12892);
+    var taxi = new Car("Webville Motors", "Taxi", 1855, "yellow", 4, false, 281341);
+    var fiat = new Car("Fiat", "500", 1957, "Medium Blue", 2, false, 88000);
+    var testCar = new Car("Webville Motors", "Test Car", 2014, "marine", 2, true, 21);
+
+    var cars = [chevy, cadi, taxi, fiat, testCar];
+    for (var i = 0; i < cars.length; i++) {
+        cars[i].start();
+        cars[i].drive();
+        cars[i].drive();
+        cars[i].stop();
+    }
+</script>-->
+<script type="text/html">
+    function Car(params,) {
+    this.make = params.make;
+    this.model = params.model;
+    this.year = params.year;
+    this.color = params.color;
+    this.passengers = params.passengers;
+    this.convertible = params.convertible;
+    this.mileage = params.mileage;
+    this.started = false;
+    this.star = function () {
+    this.started = true;
+    };
+    this.drive=function(){
+    if (this.started) {
+    alert("Zoom Zoom!");
+    } else {
+    alert("You need to start the engine first.");
+    }
+    };
+    this.stop = function () {
+    this.started = false;
+    };
+    }
+
+    //使用多个形参
+    //var cadi = new Car("GM", "Cadillac", 1955, "tan", 5, false, 12892);
+
+    //将所有实参都放到一个对象字面量中，再将这个对象字面量传递给函数。
+    var cadiParams = {
+    make: "GM",
+    model: "Cadillac",
+    year: 1955,
+    color: "tan",
+    passengers: 5,
+    convertible: false,
+    mileage: 12892
+    }
+
+    var cadi = new Car(cadiParams);
+    cadi.star();
+    cadi.drive();
+    cadi.stop();
+</script>
+<script type="text/html">
+    function Dog(name, breed, weight) {
+    this.name = name;
+    this.breed = breed;
+    this.weight = weight;
+    this.bark = function () {
+
+    if (this.weight > 25) {
+    alert(this.name + " says Woof!");
+    } else {
+    alert(this.name + " says Yip!");
+    }
+    };
+    }
+
+    function Car(params) {
+    this.make = params.make;
+    this.model = params.model;
+    this.year = params.year;
+    this.color = params.color;
+    this.passengers = params.passengers;
+    this.convertible = true;
+    this.mileage = 21120;
+    this.stared = false;
+    this.start = function () {
+    this.started = true;//在方法中没有使用形参。这合乎情理，因为在方法中应总是通过关键字this使用对象的属性。
+    };
+    this.stop = function () {
+    this.started = false;
+    };
+    this.drive = function () {
+    if (this.started) {
+    alert("Zoom zoom!");
+    } else {
+    alert("You need to start the engine first.");
+    }
+    };
+    }
+
+    var limoParams = {
+    make: "Webville Motors",
+    model: "limo",
+    year: 1983,
+    color: "black",
+    passengers: 12,
+    convertible: true,
+    mileage: 21120
+    };
+
+    //每当使用运算符new调用构造函数时，都将创建一个新的对象实例。
+
+    var limo = new Car(limoParams);//如果使用构造函数Car创建一个对象，这个对象就是汽车，更准确地说，这个对象就是一个Car实例。每个实例都有一组独特的属性值，但使用构造函数Car创建的对象都是Car实例
+    //运算符instanceof确定对象是由那个构造函数创建的。
+    if (limo instanceof Car) {
+    console.log("Congrats, it's a Car!");
+    }
+    limo.start();
+    limo.drive();
+    limo.stop();
+    var limoDog = new Dog("Rhapsody In Blue", "Poodle", 40);
+    limoDog.bark();
+
+    console.log(limo.make + " " + limo.model + " is a " + typeof limo);
+    console.log(limoDog.name + " is a " + "is a " + typeof limoDog);
+</script>
+<script>
+    function dogCatcher(obj) {
+        if (obj instanceof Dog) {
+            return true
+        }
+        return false;
+    }
+
+    function Cat(name, breed, weight) {
+        this.name = name;
+        this.breed = breed;
+        this.weight = weight;
+    }
+
+    var meow = new Cat("Meow", "Siamese", 10);
+    var whiskers = new Cat("Whiskers", "Mixed", 12);
+    var fido = {name: "Fido", breed: "Mixed", weight: 38};
+
+    function Dog(name, breed, weight) {
+        this.name = name;
+        this.breed = breed;
+        this.weight = weight;
+        this.bark = function () {
+            if (this.weight > 25) {
+                alert(this.name + " says Woof!");
+            } else {
+                alert(this.name + " says Yip!");
+            }
+        };
+    }
+
+    var fluffy = new Dog("Fluffy", "Poodle", 30);
+    var spot = new Dog("Spot", "Chihuahua", 10);
+    var dogs = [meow, whiskers, fido, fluffy, spot, dogs];
+    for (var i = 0; i < dogs.length; i++) {
+        if (dogCatcher(dogs[i])) {
+            console.log(dogs[i].name + " is a dog!");
+        }
+    }
+</script>
+<script>
+    function Car(params) {
+        this.make = params.make;
+        this.model = params.model;
+        this.year = params.year;
+        this.color = params.color;
+        this.passengers = params.passengers;
+    }
+
+    function Dog(name, breed, weight) {
+        this.name = name;
+        this.breed = breed;
+        this.weight = weight;
+    }
+
+    var fido = new Dog("Fido", "Mixed", 38);
+    fido.owner = "Bob";
+
+    delete fido.weight;//使用运算符delete删除既有属性
+
+    fido.trust = function (person) {//要添加新方法，只需将这个方法赋给一个新属性
+        return (person === "Bom");//使用的是匿名函数
+    };
+
+    var notBite = fido.trust("Bob");//fido对象包含方法trust，因此notBite的值为true
+
+    //这些代码行不通，因为spot对象没有方法trust。这将引发错误如下错误：TypeError:Object#<Dog>has no method "trust"。
+    //var spot = new Dog("Spot", "Chihuahua", 10);
+    //notBite = spot.trust("Bob");
+
+    var cadiParams = {
+        make: "GM", model: "Cadillac",
+        year: 1955, color: "tan",
+        passengers: 5, convertible: false,
+        mileage: 12892
+    };
+    var cadi = new Car(cadiParams);
+    //对创建的汽车对象进行修改后，它依然是汽车对象。
+
+    //可添加新属性chrome，并删除属性convertible
+    cadi.chrome = true;
+    delete cadi.convertible;
+
+    //对象cadi依然是汽车对象 前面说的JavaScript的类型系统是动态的时，指的就是这个意思。
+    //cadi instanceof Car 结果为true
+
+    //内置构造函数Date表示当前日期和时间的日期对象。
+
+    var now = new Date();
+    var dateString = now.toString();//返回一个表示日期的字符串，如“Thu Feb 06 2014 17:29:29GMT-0800 (PST) ”
+    var theYear = now.getFullYear();//返回日期中的年份
+    var theDayOfWeek = now.getDay();//返回一个数字，指出日期对象表示的是星期几，如1(表示星期一)
+
+    var birthday = new Date("May 1, 1983");//创建一个表示1983年5月1日的日期对象
+    var birthday = new Date("May 1, 1983 08:03 pm");//还可以在传入的字符串中包含时间
+
+    //构造函数创建数组
+    var emptyArray = new Array();//新建一个空数组
+    emptyArray[0] = 99;//给空数组添加一个元素
+
+    var oddNumbers = new Array(3);//创建特定长度的数组对象(长度为3)
+    //刚创建时，数组oddNumbers的3个元素是未定义的，但随后给每个元素都设置了值
+    oddNumbers[0] = 1;
+    oddNumbers[1] = 3;
+    oddNumbers[2] = 5;
+
+    //数组对象包含一系列方法 sort() reverse() join() every()
+
+    //reverse()按相反的顺序排列数组的所有元素
+    oddNumbers.reverse();//现在数组oddNumber依次包含5、3和1 请注意，这个方法修改原始数组
+    //join()将数组中的值合并成一个字符串(这里在值之间加上-)，并返回这个字符串。
+    var aString = oddNumbers.join(" - ");//这将返回字符串“5-3-1”
+    //every()将一个函数作为参数；对于数组中的每个值，都调用这个函数，并判断该函数返回的值是true还是false。如果对于所有的元素，这个函数都返回true,那么方法every将返回true
+    var areAllOdd = oddNumbers.every(function (x) {
+        return ((x % 2) !== 0);
+    });
+
+    //前面创建数组时，使用的都是方括号表示法([])，这实际上是直接使用构造函数Array的简写。
+    //下面两种创建空数组的方式等价
+
+    var item = [];//数组字面量语法(构造函数Array的简写)
+    var item = new Array();//构造函数语法
+
+    var items = ["a", "b", "c"];//数组字面量语法
+    var items = new Array("a", "b", "c");//构造函数语法
+
+
+    //要判断两个对象是否是使用个构造函数创建的，可像下面这样做:
+    ((fido instanceof Dog) && (spot instanceof Dog));//如果这个表达式的结果为true就说明fido和spot是使用同一个构造函数创建的
+
+    function CarProtoype() {
+        this.make = "Webville Motors";
+        this.year = 2013;
+        this.start = function () {
+        };
+        this.stop = function () {
+        };
+        this.drive = function () {
+        };
+    }
+    高级函数创建批量相同的方法和属性的对象的函数
+    函数
+
+</script>
+
+</body>
+</html>

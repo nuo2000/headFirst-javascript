@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>创建对象</title>
+</head>
+<body>
+<!--12高级对象构造技巧
+      创建对象
+-->
+
+<script type="text/html">
+    //使用对象字面量创建对象
+    var taxi = {
+    make: "Webville Motors",
+    model: "Taxi",
+    year: 1955,
+    color: "yellow",
+    passengers: 4,
+    convertible: false,
+    mileage: 281341,
+    started: false,
+    start: function () {
+    this.started = true;
+    },
+    stop: function () {
+    this.started = false
+    },
+    drive: function () {
+    // 方法drive的代码
+    }
+    };
+
+    //对象字面量
+    var dog = {
+    name: "Fido",
+    breed: "Mixed",
+    weight: 38
+    };
+
+    //先定义一个(对象)构造函数，再使用它来创建对象。
+
+    //创建构造函数
+    function Dog(name, breed, weight) {//函数名首字母大写，并非必须这样做，但人人都将此视为一种约定加以遵守。
+    //属性名和形参吗不必相同，但通常相同，这也是约定。
+    this.name = name;
+    this.breed = breed;
+    this.weight = weight;
+    }
+
+    //使用构造函数
+    //我们首先指定关键字new,再使用合适的实参调用构造函数Dog。这条语句执行完毕后，变量fido将包含一个指向新小狗对象的引用
+    var fido = new Dog("Fido", "Mixed", 38);//为创建fido,我创建一个名称为Fido、品种为Mixed、体重为38磅的小狗对象
+
+    //有了构造函数Dog后，我们就可以不断地创建小狗对象
+    var fluffy = new Dog("Fluffy", "Poodle", 30);
+    var spot = new Dog("spot", "Chihuahua", 10);
+</script>
+<script>
+    //我们给构造函数命名时，采用了首字母大写的方式。开发人员一眼就能看出哪些是构造函数哪些是常规函数，因为调用构造函数时，需要使用运算符new。并非必须这样做，但人人都将此视为一种约定加以遵守。
+    function Dog(name, breed, weight) {
+        //属性名和形参名不必相同，但通常相同，——这也是约定
+        this.name = name;//给新对象的name属性赋值
+        this.breed = breed;//给新对象的breed属性赋值
+        this.weight = weight;//给新对象的weight属性赋值
+        this.bark = function () {//给新对象的bark方法属性赋值(匿名函数)
+            if (this.weight > 25) {
+                alert(this.name + " says Woof!");
+            } else {
+                alert(this.name + " says Yip!");
+            }
+        };
+    }
+
+    //new首先创建一个新的空对象。
+    //接下来，new设置this,使其指向这个新对象。
+    //设置this后，调用函数Dog，并将"Fido"、"Mixed"和38作为实参传递给它。
+    //接下来，执行这个函数的代码。与大多数的函数一样，Dog给新创建的this对象的属性赋值。
+    //最后,Dog函数执行完毕后，运算符new返回this——指向新创建的对象的引用。请注意，它会自动为你返回this,你无需在代码中显式地返回。指向新对象的引用被返回后，我们将其赋给变量fido
+    var fido = new Dog("Fido", "Mixed", 38);//new和构造函数名之间必须有一个空格
+    var fluffy = new Dog("Fluffy", "Poodle", 30);
+    var spot = new Dog("Spot", "Chihuahua", 10);
+    var dogs = [fido, fluffy, spot];
+
+    for (var i = 0; i < dogs.length; i++) {
+        dogs[i].bark();
+    }
+
+    /*for (var i = 0; i < dogs.length; i++) {
+        var size = "small";
+        if (dogs[i].weight > 10) {
+            size = "large";
+        }
+        console.log("Dog: " + dogs[i].name + " is a " + size + dogs[i].breed);
+    }*/
+</script>
+<script type="text/html">
+    function widget(partNo, size) {
+    var this.no = partNo;
+    var this.breed = size;
+    }
+
+    function FormFactor(material, widget) {
+    this.material = material,
+    this.widget = widget,
+    return this;
+    }
+
+    var widgetA = widget(100, 'large');
+    var widgetB = new widget(101, 'small');
+    var formFactorA = newFormFactor("plastic", widgetA);
+    var formFactorB = new ForumFactor("metal", widgetB);
+</script>
+<script>
+    function Coffee(roast, ounces) {
+        this.roast = roast;
+        this.ounces = ounces;
+        this.getSize = function () {
+            if (this.ounces === 8) {
+                return "small";
+            } else if (this.ounces === 12) {
+                return "medium";
+            } else if (this.ounces === 16) {
+                return "large";
+            }
+        };
+        this.toString = function () {
+            return "You've ordered a " + this.getSize() + " "
+                + this.roast + " coffee.";
+        };
+    }
+
+    var houseBlend = new Coffee("House Blend", 12);
+    console.log(houseBlend.toString());
+
+    var darkRoast = new Coffee("Dark Roast", 16);
+    console.log(darkRoast.toString());
+
+</script>
+</body>
+<script>
+    /*
+    * 对象构造函数(简称为构造函数)可更轻松地创建对象且确保所有对象都包含相同的属性和方法。编写的对象代码将简介得多，而且创建大量对象时不容易出错。犹如一个小型工厂，能够创建无数类似的对象。
+    *
+    * 使用构造函数：先定义一个构造函数，再使用它来创建对象。从代码看，构造函数很像返回对象的函数：定义后，每当需要创建新对象时都可调用它。
+    * 对象构造函数返回的如果不是this,这将导致构造函数不返回它创建的对象。
+    *
+    * 构造函数名的首字母大写，能让开发人员一眼就看出那些函数是构造函数，哪些函数是常规函数。问什么区分这一点，因为调用构造函数需要使用运算符new。
+    *
+    * new是一个与构造函数一起用来创建对象的运算符。运算符对操作数进行操作，new只操作一种操作数，那就是函数调用。
+    *
+    * 传递大量实参时可使用一种适用于任何函数的常见技巧————无论它是常规函数还是构造函数。将所有实参都放到一个对象字面量中，再将这个对象字面量传递给函数。这将通过一个容器(对象字面量)传递所有的值，从而不必操心实参与形参的顺序问题。
+    *
+    * 每当使用运算符new调用构造函数时，都将创建一个新的对象实例。
+    *
+    * 使用运算符instanceof来确定对象是由那个构造函数创建的。如果对象是由指定的构造函数创建的，运算符instanceof将返回true.
+    * 实际上，创建对象时，运算符new在幕后存储了一些信息，让你随时都能确定对象是由那个函数创建的。运算符instanceof就是根据这些信息来确定对象是否是指定构造函数的实例。
+    *
+    * 使用构造函数创建对象后，可对其进行修改，因为构造函数创建的对象是可以修改的
+    *
+    * 内置函数(JavaScript标准内置对象)
+    * JavaScript自带了一系列构造函数，可用于实例化一些便利的对象。Date()。通过向构造函数Date传递额外的实参，可轻松地创建表示任何日期和时间的日期对象。
+    *
+    * 构造函数创建数组对象: var arr = new Array() 数组字面量：var items = ["a","b","b"] 使用字面量表示法和构造函数创建的对象没什么两样 创建简单数组时，使用数组字面量语法的效果很好，但创建要等到运行阶段才能确定长度的数组时，使用构造函数Array更合适。可以根据需要使用其中任意一种方式，也可结合使用这两种方式。
+    *
+    * Object构造函数 创建对象 对象字面量表示法{}与new object()等价
+    * Math对象 包含用于执行数学运算任务的属性和方法，茹Math.PI和Math.random()
+    * RegExp构造函数 可创建正则表达式对象，让你能够在文本中搜索非常复杂的模式
+    * Error构造函数 创建标准错误对象，为你在代码中捕获错误提供了极大的便利
+    *
+    * */
+</script>
+</html>
