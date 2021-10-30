@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click me!</title>
+    <style>
+        body, button {
+            margin: 10px;
+        }
+
+        div {
+            padding: 10px;
+        }
+    </style>
+
+    <script type="text/html">
+        //不使用闭包
+        var count = 0;
+        window.onload = function () {
+        var button = document.getElementById('clickme');
+        button.onclick = handler;
+        };
+        function handler() {
+        var message = "You click me ";
+        var div = document.getElementById('message');
+        count++;
+        div.innerHTML = message + count + "times!";
+        }
+    </script>
+
+    <script>
+        //使用闭包
+        window.onload = function () {
+            //环境 3个自由变量
+            var count = 0;
+            var message = "You clicked me ";
+            var div = document.getElementById('message');
+
+            var button = document.getElementById('clickme');
+            button.onclick = function () {//闭包
+                count++;//+1 并更新环境中变量的值
+                div.innerHTML = message + count + " times!";//更新环境变量的内容
+            };
+        };
+
+    </script>
+</head>
+<body>
+
+<button id="clickme">Click me!</button>
+<div id="message"></div>
+
+</body>
+</html>

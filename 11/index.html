@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fun</title>
+</head>
+<body>
+
+<button id="bake">bake</button>
+
+
+<!--11 匿名函数、作用域和闭包
+       系统地讨论函数
+-->
+
+
+<!--<script>
+    function handler() {
+        alert("Yeah, that page loaded!");
+    }
+
+    window.onload = handler;
+
+    //函数声明变成函数表达式 且没有使用名称
+    window.onload = function () {
+        alert("Yeah, that page loaded!");
+    }
+
+    window.onload = init;
+    var cookies = {
+        instructions: "Preheat oven to 350...",
+        bake: function () {
+            console.log("Baking the cookies.");
+            setTimeout(done, time);
+        }
+    };
+
+    function init() {
+        var button = document.getElementById("bake");
+        button.onclick = handleButton;
+    }
+
+    function handleButton() {
+        console.log("Time to bake the cookies.");
+        cookies.bake(2500);
+    }
+
+    function done() {
+        alert("Cookies are ready, take them out to cool.");
+
+        console.log("Cooling the cookies.");
+        var cool = function () {
+            alert("Cookies are cool, time to eat!");
+        };
+
+        setTimeout(cool, 1000);
+        setTimeout(function(){
+          alert("Cookies are cool,time to eat!);
+        },1000)
+    }
+</script>-->
+
+<!--<script>
+    function cookieAlarm() {
+        alert("Time to take the cookies out of the oven");
+    }
+
+    setTimeout(cookieAlarm, 600000);
+
+   setTimeout(function () {
+
+       alert("Time to take the cookies out of the oven");
+   }, 60000);
+
+
+   function vaccine(dosage) {
+       if (dosage > 0) {
+           inject(dosage);
+       }
+   }
+   administer(patient, vaccine, time);
+
+   administer(patient,function(dosage){
+       if (dosage > 0) {
+           inject(dosage);
+       }
+   },time)
+</script>-->
+
+<!--<script>
+    var migrating = true;
+    var fly = function (num) {
+        var sound = 'Flying';
+
+        function wingFlapper() {
+            console.log(sound);
+        }
+
+        for (var i = 0; i < num; i++) {
+            wingFlapper();
+        }
+    };
+
+    function quack(num) {
+        var sound = "Quack";
+        var quacker = function () {
+            console.log(sound);
+        };
+
+        for (var i = 0; i < num; i++) {
+            quacker();
+        }
+    }
+
+    if (migrating) {
+        quack(4);
+        fly(4);
+    }
+
+
+</script>-->
+<!--<script>
+    var secret = "007";
+
+    function getSecret() {
+        var secret = "008";
+
+        function getValue() {
+            return secret;
+        }
+
+        return getValue();//调用函数 返回值
+    }
+
+    getSecret();
+</script>-->
+<!--<script>
+    var secret = "007";
+
+    function getSecret() {
+        //环境[
+        var secret = "008";//自由变量
+        //环境]
+
+        function getValue() {
+            return secret;
+        }
+
+        return getValue;//返回函数引用
+    }
+
+    var getValueFun = getSecret();
+    getValueFun();
+    console.log(getValueFun);
+</script>-->
+<!--<script>
+    var justAVar = "Oh, don't you worry about it, I'm GLOBAL";//全局作用域
+
+    function whereAreYou() {
+        var justAVar = "Just an every day LOCAL";//本地作用域
+        return justAVar;
+    }
+
+    var result = whereAreYou();
+    console.log(result);
+
+    var jastAVar = "Oh, don't you worry about it, I'm GLOBAL";
+
+    function whereAreYou() {
+        var justAvar = "Just an every day LOCAL";
+
+        function inner() {
+            return justAVar;
+        }
+
+        return inner();
+    }
+
+    var result = whereAreYou();
+    console.log(result);
+
+
+    var jastAVar = "Oh, don't you worry about it, I'm GLOBAL";
+
+    function whereAreYou() {
+        var justAVar = "Just an every day LOCAL";
+
+        var inner = function () {
+            return justAVar;
+        };
+        return inner;//返回一个函数引用和局部变量环境
+    }
+
+    var innerFunction = whereAreYou();
+
+    var result = innerFunction();//调用函数 获取环境中的变量
+    console.log(result);
+</script>-->
+<script type="text/html">
+    //全局变量
+    var count = 0;
+    function counter(){
+    count = count + 1;//把新值计算后赋值给变量
+    return count;//返回重新赋值的变量
+    }
+    console.log(counter());//1
+    console.log(counter());//2
+    console.log(counter());//3
+</script>
+<script>
+    //闭包
+    function makeCounter() {
+        var count = 0;
+
+        function counter() {
+            count = count + 1;//新值计算后赋值给环境中局部变量count
+            return count;//返回重新赋值的count
+        }
+
+        return counter;//返回函数counter引用
+    }
+
+    //console.log(makeCounter()); //调用函数makeCounter 打印函数makeCounter返回的(子)函数counter(体)引用(和环境)
+
+    var doCount = makeCounter();//调用函数makeCounter 并把返回的函数引用和环境(调用函数makeCounter获得一个闭包：一个函数及环境) 赋值给doCount变量
+    console.log(doCount());//调用counter函数 返回重新赋值的count变量并打印出来 结果为1
+    console.log(doCount());//调用counter函数 返回重新赋值的count变量并打印出来 结果为2
+    console.log(doCount());//调用counter函数 返回重新复制的count变量并打印出来 结果为3
+</script>
+<script>
+    function makePassword(password) {
+        return function guess(passwordGuess) {
+            return (passwordGuess === password);
+        };
+    }
+
+    var tryGuess = makePassword("secret");
+    console.log("Guessing 'nope': " + tryGuess("nope"));
+    console.log("Guessing 'nope': " + tryGuess("secret"));
+
+    function multN(n) {
+        return function multBy(m) {
+            return n * m;
+        };
+    }
+
+    var multBy3 = multN(3);
+
+    console.log("Multiplying 2: " + multBy3(2));
+    console.log("Multiplying 3: " + multBy3(3));
+
+    function makeCounter() {
+        var count = 0;
+        return {
+            increment: function () {
+                count++;
+                return count;
+            }
+        };
+    }
+
+    var counter = makeCounter();
+    console.log(counter.increment());
+    console.log(counter.increment());
+</script>
+<script>
+    function makeTimer(doneMessage, n) {
+        setTimeout(function () {//闭包 函数引用传递给setTimeout
+            alert(doneMessage);//自由变量
+        }, n)
+    }
+
+    makeTimer("Cookies are done!", 100);
+</script>
+<script>
+    function handler() {
+        alert(doneMessage);
+    }
+
+    function makeTimer(doneMessage, n) {
+        setTimeout(handler, n);
+    }
+
+    makeTimer("Cookies are done!", 1000);
+    console.log(makeTimer);
+
+
+    window.onload = function () {
+        var images = document.getElementsByTagName("img");
+        for (var i = 0; i < images.length; i++) {
+            images[i].onclick = showAnswer;
+        }
+    };
+
+    function showAnswer(eventObj) {
+        var image = eventObj.target;
+        var name = image.id;
+        name = name + ".jpg";
+        image.src = name;
+        //setTimeout(reblur, 2000, image);
+
+        setTimeout(function () {
+            var name = image.id;
+            name = name + "blur.jpg";
+            image.src = name;
+        }, 2000);
+    }
+
+    /*function reblur(image) {
+        var name = image.id;
+        name = name + "blur.jpg";
+        image.src = name;
+    }*/
+</script>
+<script>
+    function setTimer(doneMessage, n) {
+
+        setTimeout(function () {
+            alert(doneMessage);
+        }, n);
+        doneMessage = "OUCH";
+    }
+
+    setTimer("Cookies are done!", 1000);
+</script>
+<style>
+    body, button {
+        margin: 10px;
+    }
+
+    div {
+        padding: 10px;
+    }
+</style>
+<script>
+    var secret = "007";
+
+    function getSecret() {
+        var secret = "008";
+
+        function getValue() {
+            return secret;
+        }
+
+        return getValue();
+    }
+
+    getSecret();
+    console.log(getSecret);
+
+
+    var secret = "007";
+
+    function getSecret() {
+        var secret = "008";
+
+        function getValue() {
+            return secret;
+        }
+
+        return getValue;
+    }
+
+    var getValueFun = getSecret();
+    getValueFun();
+    console.log(getValueFun);
+</script>
+<script>
+    (function (food) {
+            if (food === "cookies") {
+                alert("More please");
+            } else if (food === "cake") {
+                alert("Yum yum");
+            }
+        }
+    )("cookies");
+
+    var eat = function (food) {
+        if (food === "cookies") {
+            alert("More please");
+        } else if (food === "cake") {
+            alert("Yum yum");
+        }
+    };
+    (eat)("cookies");
+</script>
+</body>
+
+<script>
+    /*
+    * 匿名(anonymous)性：没有名称的函数(表达式)。通过使用匿名函数，可让代码更简洁精练，可读性更强，效率更高，甚至更易于维护。通常用于需要函数引用的地方。
+    *
+    * 对象中的方法函数也是匿名函数
+    *
+    * 浏览器分两遍来处理JavaScript代码：第一遍，浏览器分析所有的函数声明，并定义这些函数声明创建的函数；第二遍，浏览器按从上到下的顺序执行代码，并定义函数表达式创建的函数。使用函数声明创建的函数是在使用函数表达式创建的函数之前定义的，而这又决定了你可在什么时候和什么地方调用函数。
+    * 可将函数声明放在任何地方(代码的开头、末尾、中间)，且可以在任何地方调用他们。在代码的任何地方函数声明创建的函数都是已定义的，这被成为提升（hoisting）函数表达式它创建的函数要等到它执行后才被定义。即便将函数表达式赋给全局变量，也要等到它创建的函数被定义后，才能使用这个全局变量来调用该函数
+    * 函数声明创建的函数是在执行其他代码前定义的。函数表达式是在运行阶段与其他代码一起执行的，因此在函数表达式所在的语句执行前，它创建的函数是未定义的。
+    *
+    * 可将函数表达式传递给函数，还可以从函数返回函数表达式。函数表达式的结果是一个函数引用，因此在可以使用函数引用的任何地方，都可使用函数表达式。
+    *
+    * 嵌套函数是在其他函数中定义的函数。与局部变量一样，嵌套函数的作用域也是局部的。在嵌套函数中，为确定变量的值，将在最近的外部函数中查找，如果没有找到，再在全局作用域中查找。
+    * 在代码顶层定义的函数是全局的，而在函数中定义的函数是局部的。存储函数引用的形参也是局部变量。
+    *
+    * 词法(lexical):意味着只需查看代码的结构就可确定变量的作用域，而不是等到代码执行时才明白。词法作用域的优点是，总是可以通过查看代码来确定变量是在哪里定义的，进而确定它的值
+    * 每个函数都有与之相关联的环境，其中包含它所处作用域内的局部变量。返回函数时不仅仅有函数还有与之相关联的环境(的值)。所有的局部变量都存储在一个环境(environment)中
+    *
+    * 自由变量：指的是不在本地作用域内定义的变量 在函数体内未绑定的变量 (子级函数可一层层向上访问父级变量 父级不可以访问子级变量)
+    * 闭包(closure)名词，指的是函数和引用环境。 (函数和环境一起被称为闭包)。闭包捕获其创建时所处作用域内的变量的值。
+    * 要理解闭包一词，需要明白敲定(close)函数的概念 敲定函数的环境指的是给所有自由变量都提供了值的环境
+    * 通常使用闭包来为事件处理程序捕获状态。
+    *
+    * 并非只能通过从函数返回函数来创建闭包。如果函数使用了自由变量，则每当你在创建该函数的上下文外面执行它时，都将创建一个闭包。将函数传递给函数时，也将创建闭包。
+    * 闭包包含的是实际环境，而非环境的副本。 环境引用的是实时变量，如果闭包函数外面的代码修改了变量，闭包函数执行时看到的将是变量的新值
+    *
+    * */
+</script>
+</html>
