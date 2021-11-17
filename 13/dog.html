@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dog</title>
+</head>
+<body>
+<script>
+    function Robot(name, year, owner) {
+        this.name = name;
+        this.year = year;
+        this.owner = owner;
+    }
+
+    //继承内置对象时，可重写这些对象定义的方法。一种常见的情形是，重写Object定义的方法toString.
+    Robot.prototype.toString = function () {
+        return this.name + " Robot belonging to " + this.owner;
+    };
+    var toy = new Robot("Toy", 2013, "Avary");
+    console.log(toy.toString());
+    //使用运算符+来拼接字符串和对象，JavaScript将自动调用方法toString将对象转换为字符串，再将该字符串与另一个字符串拼接起来
+    console.log("Robot is: " + toy);
+
+
+    String.prototype.cliche = function () {
+        var cliche = ["look and load", "touch base", "open the kimono"];
+        for (var i = 0; i < cliche.length; i++) {
+            var index = this.indexOf(cliche[i]);
+            if (index >= 0) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    var sentences = ["I'll send my car around to pick you up.",
+        "Let's touch base in the morning and see where we  are",
+        "We don't want to open the kimono,we just want to inform them."
+    ];
+    for (var i = 0; i < sentences.length; i++) {
+        var phrase = sentences[i];
+
+        if (phrase.cliche()) {
+            console.log("CLICHE ALERT: " + phrase);
+        }
+    }
+
+
+    Robot.prototype.palindrome = function () {
+        var word = [""];
+        for (var i = 0; i < word.length; i++) {
+            var r = this.reverse(word[i]);
+            if (r >= 0) {
+                return true;
+            }
+        }
+        return false;
+    };
+    var sen = [];
+    for (var i = 0; i < sen.length; i++) {
+        var s = sen[i];
+        if (s.palindrome()) {
+        }
+    }
+
+    //函数真的是对象吗
+    function meditate() {
+        console.log("Everything is an object...");
+    }
+
+    alert(meditate instanceof Object);
+
+    /*var fun = "vfun";*/
+
+    function fun (){
+        console.log("cfun");
+        return "f";
+    }
+
+    console.log(fun());
+
+</script>
+<!--<script>
+    //构造函数
+    function Dog(name, breed, weight) {
+        this.name = name;
+        this.breed = breed;
+        this.weight = weight;
+    }
+
+    //小狗原型
+    Dog.prototype.species = "Canine";//小狗添加属性
+    Dog.prototype.bark = function () {//小狗原型添加方法
+        if (this.weight > 25) {
+            console.log(this.name + " says Woof!");
+        } else {
+            console.log(this.name + " says Yip!");
+        }
+    };
+    Dog.prototype.run = function () {//小狗原型添加方法
+        console.log("Run!");
+    };
+    Dog.prototype.wag = function () {//小狗原型添加方法
+        console.log("Wag!");
+    };
+/*
+
+    //创建小狗对象
+    var fido = new Dog("Fido", "Mixed", 38);
+    var fluffy = new Dog("Fluffy", "Poodle", 30);
+    var spot = new Dog("Spot", "Chihuahua", 10);
+
+    //每个小狗对象调用方法(从原型继承的方法)
+    fido.bark();
+    fluffy.run();
+    fido.wag();
+
+    fluffy.bark();
+    fluffy.run();
+    fluffy.wag();
+
+
+    //重写原型
+    spot.bark = function () {
+        console.log(this.name + " says WOOF!");
+    };
+    spot.bark();
+    spot.run();
+    spot.wag();
+
+    //新增小狗对象
+    var barnaby = new Dog("Barnaby", "Basset Hound", 55);
+    //新增原型方法(继承该原型的任何对象都能使用这个方法)
+    Dog.prototype.sit = function () {
+        if (this.sitting) {
+            console.log(this.name + " is already sitting");
+        } else {
+            this.sitting = true;
+            console.log(this.name + " is now sitting");
+        }
+    };
+    barnaby.sit();
+    console.log(barnaby);
+    //新增原型属性(继承该原型的任何对象都能使用这个方法)
+    Dog.prototype.sitting = false;
+
+    barnaby.sit();
+    barnaby.sit();
+    spot.sit();
+    spot.sit();
+
+    //判断属性包含在实例还是原型中
+    spot.hasOwnProperty("species");
+    fido.hasOwnProperty("species");
+    //小狗原型中定义了属性sitting,并将其初始化为false,因此将spot.sitting设置为true时，将重写原型中的属性sitting，并在实例spot中定义属性sitting。
+    spot.hasOwnProperty("sitting");
+    spot.sitting = true;
+    spot.hasOwnProperty("sitting");
+    fido.hasOwnProperty("sitting");
+*/
+
+
+    //继承小狗原型的对象
+    /*var aDog = new Dog();*/
+
+    function ShowDog(name, breed, weight, handler) {
+        //重用构造函数Dog中处理属性name、breed和weight的代码
+        //这行代码调用构造函数Dog，并让其中的this指向当前的ShowDog实例。这样，构造函数Dog将设置当前ShowDog对象的属性name、breed和weight
+        Dog.call(this, name, breed, weight);//Dog是要调用的函数 参数this指定了函数Dog中this指向的对象 其他的实参与正常调用Dog时指定的实参相同
+        /*this.name = name;
+        this.breed = breed;
+        this.weight = weight;*/
+
+        this.handler = handler;
+    }
+
+    //建立原型链 把小狗实例赋给构造函数ShowDog的属性prototype
+    //表演犬ShowDog原型扩展了小狗原型：继承小狗原型的属性，添加新属性
+    ShowDog.prototype = new Dog();
+
+    //表演犬原型设置正确的constructor属性
+    ShowDog.prototype.constructor = ShowDog;
+    ShowDog.prototype.league = "Webville";
+    ShowDog.prototype.stack = function () {
+        console.log("Stack");
+    };
+    ShowDog.prototype.bait = function () {
+        console.log("Bait");
+    };
+    ShowDog.prototype.gait = function (kind) {
+        console.log(kind + "ing");
+    };
+    ShowDog.prototype.groom = function () {
+        console.log("Groom");
+    };
+
+    var scotty = new ShowDog("Scotty", "Scottiish Terrier", 15, "Cookies");
+    scotty.stack();
+    scotty.bark();
+    console.log(scotty.league);
+    console.log(scotty.species);
+
+
+    var fido = new Dog("Fido", "Mixed", 38);
+    if (fido instanceof Dog) {
+        console.log("Fido is a Dog");
+    }
+    if (fido instanceof ShowDog) {
+        console.log("Fido is a ShowDog");
+    }
+    var scotty = new ShowDog("Scotty", "Scottish Terrier", 15, "Cookie");
+    if (scotty instanceof Dog) {
+        console.log("Scotty is a Dog");
+    }
+    if (scotty instanceof ShowDog) {
+        console.log("Scotty is a ShowDog");
+    }
+    console.log("Fido constructor is " + fido.constructor);
+    console.log("Scotty constructor is " + scotty.constructor);
+
+    var fluffy = new Dog("Fluffy", "Poodle", 30);
+    var spot = new Dog("Spot", "Chihuahua", 10);
+    var scotty = new ShowDog("Scotty", "Scottish Terrier", 15, "Cookies");
+    var beatrice = new ShowDog("Beatrice", "Pomeranian", 5, "Hamilton");
+    fido.bark();
+    fluffy.bark();
+    spot.bark();
+    scotty.bark();
+    beatrice.bark();
+    scotty.gait("Walk");
+    beatrice.groom();
+</script>-->
+<!--<script>
+    function Robot(name, year, owner) {
+        this.name = name;
+        this.year = year;
+        this.owner = owner;
+    }
+
+    Robot.prototype.maker = "objectsRus";
+    Robot.prototype.speak = function () {
+    };
+    Robot.prototype.makeCoffee = function () {
+    };
+    Robot.prototype.blinkLights = function () {
+    };
+
+    var robby = new Robot("robby", 1956, "Dr.Morbius");
+    var rosie = new Robot("rosie", 1962, "George Jetson");
+
+    robby.onOffSwitch = true;
+    robby.makeCoffee = function () {
+    };
+
+    rosie.cleanHouse = function () {
+    };
+
+    console.log(robby.name + " was made by " + robby.maker + " in " + robby.year + " and is owned by " + robby.owner);
+    robby.makeCoffee();
+    robby.blinkLights();
+    console.log(rosie.name + " was made by " + rosie.maker + " in " + rosie.year + " and is owned by " + rosie.owner);
+    rosie.cleanHouse();
+
+
+    function SpaceRobot(name, year, owner,homePlanet) {
+        this.name =name;
+        this.year = year;
+        this.owner = owner;
+    }
+
+    SpaceRobot.prototype = new Robot();
+    SpaceRobot.prototype.speak = function () {
+        alert(this.name + " says Sir,If I may venture an opinion...");
+    };
+    SpaceRobot.prototype.maker = "ObjectsRUs";
+    SpaceRobot.prototype.pilot = function () {
+        alert(this.name + " says Thrusters? Are they important?");
+    };
+
+    var c3po = new SpaceRobot("C3PO", 1977, "Luke Skywalker", "Tatooine");
+    c3po.speak();
+    c3po.pilot();
+    console.log(c3po.name + " was made by " + c3po.maker);
+    var simon = new SpaceRobot("Simon", 2009, "Carla Diana", "Earth");
+    simon.makeCoffee();
+    simon.blinkLights();
+    simon.speak();
+</script>-->
+<!--<script>
+    function Robot(name, year, owner) {
+        this.name = name;
+        this.year = year;
+        this.owner = owner;
+    }
+
+    Robot.prototype.maker = "ObjectsRUs";
+    Robot.prototype.errorMessage = "All systems go.";
+    Robot.prototype.reportError = function () {
+        console.log(this.name + " says " + this.errorMessage);
+    };
+    Robot.prototype.spillWater = function () {
+        this.errorMessage = "I appear to have a short circuit!";
+    };
+    var robby = new Robot("Robby", 1956, "Dr.Morbius");
+    var rosie = new Robot("Rosie", 1962, "George Jetson");
+    rosie.reportError();
+    robby.reportError();
+    robby.spillWater();
+    rosie.reportError();
+    robby.reportError();
+    console.log(robby.hasOwnProperty("errorMessage"));
+    console.log(rosie.hasOwnProperty("errorMessage"));
+</script>-->
+<!--<script>
+    function Game() {
+        this.level = 0;
+    }
+
+    Game.prototype.play = function () {
+        // 让玩家玩游戏的代码
+        this.level++;
+        console.log("Welcome to level " + this.level);
+        this.unlock();
+    };
+    Game.prototype.unlock = function () {
+        if (this.level === 42) {
+            Robot.prototype.deployLaser = function () {
+                console.log(this.name + " is blasting you with laser beams.");
+            }
+        }
+    };
+
+    function Robot(name, year, owner) {
+        this.name = name;
+        this.year = year;
+        this.owner = owner;
+    }
+
+    var game = new Game();
+    var robby = new Robot("Robby", 1956, "Dr Morbius");
+    var rosie = new Robot("Rosie", 1962, "George Jetson");
+
+    while (game.level < 42) {
+        game.play();
+    }
+    robby.deployLaser();
+    rosie.deployLaser();
+</script>-->
+
+
+</body>
+</html>

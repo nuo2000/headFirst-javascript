@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+    <title>使用原型</title>
+</head>
+<body>
+<!--13使用原型
+      超强的对象创建方式
+-->
+
+<script>
+    function Dog(name, breed, weight) {
+        this.name=name;
+        this.breed=breed;
+        this.weight=weight;
+        this.bark = function () {
+            if (this.weight > 25) {
+                alert(this.name + " says Woof!");
+            } else {
+                alert(this.name + " says Yip!");
+            }
+        };
+    }
+
+    var fido = new Dog("Fido", "Mixed", 38);
+    var flaffy = new Dog("flaffy", "Poodle", 30);
+    var spot = new Dog("spot", "Chihuahua", 10);
+
+
+    //这是一个小狗原型。它是一个对象，包含所有小狗都需要的属性和方法。
+    //包含对每个小狗都很有用的属性。
+    //包含我们所创建的每个小狗都讲用到的行为
+    //这个原型没有包含属性name、breed和weight，因为这些属性随小狗而异，将有继承该原型的小狗对象提供。
+
+    /*
+    * 小狗原型
+    *
+    * species:"Canine"
+    *
+    * bark()
+    * run()
+    * wag()
+    * */
+
+    //继承小狗原型的对象。小狗实例中放入随小狗对象而异的属性，如name,每条小狗的这些属性都不相同。
+
+    //小狗对象
+    /*
+    * Dog
+    *
+    * name:"Fido"
+    * breed:"Mixed"
+    * weight:38
+    *
+    * */
+
+    //小狗对象工作原理(属性也一样) 12345
+
+    //1.小狗对象调用方法bark的代码
+    fido.bark();
+    //2.为执行这些代码在实例fido中查找方法bark，但没找到。
+
+    //3.沿继承链上移，在其原型中接着查找。
+
+    //4.在小狗原型中查找，发现其中确实有方法bark
+
+    //5.调用bark，导致小狗对象fido发出叫声
+
+
+    //通过使用原型，可快速地创建对象，这些对象不仅能够重用代码，还能新增行为和属性。
+
+    //对象构造函数Dog,它有一个prototype属性。这是一个指向原型的引用
+    Dog.prototype
+</script>
+<script>
+    //创建构造函数
+    function Dog(name, breed, weight) {
+        this.name =name;
+        this.breed = breed;
+        this.weight = weight;
+    }
+    //设置小狗原型 它包含属性species以及方法bark、run和wag
+
+    Dog.prototype.species = "Canine";
+    Dog.prototype.bark = function () {
+        if (this.weight > 25) {
+            console.log(this.name + " says Woof");
+        } else {
+            console.log(this.name + " says Yip!");
+        }
+    };
+    Dog.prototype.run = function () {
+        console.log("Run!");
+    };
+    Dog.prototype.wag = function () {
+        console.log("Wag!");
+    };
+</script>
+
+<script>
+    /*
+    * JavaScript没有类，对象从其他对象那里继承行为，我们称之为原型式继承(prototypal inheritance)或基于原型的继承
+    * 对象的行为通常指的是它支持的一系列方法
+    *
+    * JavaScript对象可从其他对象那里继承属性和行为。更具体地说，JavaScript使用原型式继承，其中其行为被继承的对象称为原型。这旨在继承既有属性(包括方法)，同时在新对象中添加属性。
+    *
+    * 任何情况下，都可重写原型的属性和方法，为此只需在对象实例中提供它们即可，这之所以可行，是因为JavaScript总是先在对象实例(即具体的小狗对象)中查找属性，如果找不到，再在原型中查找。
+    *
+    * 构造函数有prototype属性，是一个指向原型的引用。
+    * 原型中的方法(或属性)后，每个继承该原型的对象实例都能使用。修改原型的属性后，将影响继承该原型的所有实例对象
+    *
+    * 使用hasOwnProperty判断使用的属性包含在实例还是原型中，如果属性是在对象实例中定义的，这个方法将返回true,如果属性不是在对象实例中定义的，但能够访问它，就可认为它肯定是在原型中定义的。
+    * 对象不仅可以继承一个原型的属性，还可以继承一个原型链(新原型.prototype= new 原型())。function Dog() function ShowDog() ShowDog.prototype = new Dog()
+    * instanceof不仅考虑当前对象的类型，还考虑它继承的所有对象
+    * call是一个内置方法，可对任何函数调用它 将一个用作this的对象以及函数的所有实参传递给它
+    *
+    * 创建的每个对象都有原型，该原型默认为Object，你可将对象的原型设置为其他对象，但所有原型链的终点为Object 所有对象都是从Object派生而来 Object实现了多个重要的方法，它们是JavaScript对象系统的核心部分。
+    *
+    * 所有对象都可使用方法toString来获取其简单的字符串表示。
+    * 重写内置对象的属性和方法时，要小心，否则可能改变其他依赖于这些属性来完成特定工作的代码的行为。
+    * 不要重写Object的如下属性:constructor,指向与这个原型相关联的构造函数。hasOwProperty,判断属性包含在原型还是实例中。isPrototypeOf,判断一个对象是否是另一个对象的原型。propertyIsEnumerable,判断通过迭代对象 的所有属性是否可访问指定的属性。Array创建数组的简写
+    * 可以重写：toString,将对象转换为字符串。toLocaleString,类似于toString,也将对象转换为字符串。通过重写这个方法，可提供描述对象的本地化字符串。valueOf是另一个可以重写的方法。它默认情况下返回当前对象，但通过重写，可让它返回你希望的其他值。
+    *
+    * */
+</script>
+</body>
+</html>
